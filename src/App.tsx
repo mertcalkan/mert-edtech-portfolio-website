@@ -2,16 +2,45 @@ import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+import { motion } from "framer-motion"
+import { Loader } from "@react-three/drei"
 import Navigation from "./components/Navigation"
 
-// Sayfaları daha sonra oluşturacağız, şimdilik Index'i Hakkımda olarak kullanabiliriz
-import Index from "./pages/Index" 
+import Index from "./pages/Index"
+import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
-// import Projects from "./pages/Projects" // Projeler sayfası hazır olunca açarız
-// import Contact from "./pages/Contact"   // İletişim sayfası hazır olunca açarız
 
 const queryClient = new QueryClient()
+
+// Sadece Fade-In (Belirme) efekti. Eski sayfa anında silinir (kasmayı önler), yeni sayfa yumuşakça gelir.
+const PageWrapper = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5, ease: "easeOut" }}
+    className="absolute inset-0 w-full h-full"
+  >
+    {children}
+  </motion.div>
+);
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <div className="relative w-full h-[100dvh] overflow-hidden bg-black">
+      {/* AnimatePresence KALDIRILDI. Çift Canvas render edilmesinin ve kasmanın önüne geçildi. */}
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Index /></PageWrapper>} />
+        <Route path="/hakkimda" element={<PageWrapper><Index /></PageWrapper>} />
+        <Route path="/iletisim" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="/projeler" element={<PageWrapper><Index /></PageWrapper>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  )
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -19,21 +48,19 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        {/* Navigation her sayfada üstte sabit kalacak */}
         <Navigation />
-        <Routes>
-          {/* Ana sayfa -> Hakkımda */}
-          <Route path="/" element={<Index />} />
-          
-          {/* Yeni Sayfalar (Dosyaları oluşturdukça buraları Index yerine kendi componentleriyle değiştireceğiz) */}
-          <Route path="/projeler" element={<Index />} /> 
-          <Route path="/iletisim" element={<Index />} />
-
-          {/* 404 sayfası */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
+
+    {/* 3D Modellerin yüklenmesini dinleyen Global Loader */}
+    <Loader 
+      containerStyles={{ backgroundColor: "#000000" }} 
+      innerStyles={{ width: "300px" }} 
+      barStyles={{ backgroundColor: "#eaff00", height: "4px" }} 
+      dataStyles={{ color: "white", fontSize: "16px", fontFamily: "sans-serif", fontWeight: "bold" }} 
+      dataInterpolation={(p) => `Modeller Hazırlanıyor... ${p.toFixed(0)}%`}
+    />
   </QueryClientProvider>
 )
 

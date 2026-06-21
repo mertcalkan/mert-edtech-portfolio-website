@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navItems = [
     { path: "/", label: "Hakkımda" },
@@ -17,10 +16,11 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md z-50 border-b border-border">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+    <nav className="fixed top-0 w-full z-50 bg-transparent">
+      <div className="container mx-auto px-6 py-6 flex justify-between items-center relative z-50">
         <Link
           to="/"
+          onClick={() => setIsMenuOpen(false)}
           className="font-questrial font-bold text-2xl text-white tracking-widest"
         >
           MERT.
@@ -32,8 +32,10 @@ const Navigation = () => {
             <Link
               key={path}
               to={path}
-              className={`font-questrial transition-colors duration-300 hover:text-primary ${
-                location.pathname === path ? "text-primary font-bold" : "text-foreground/80"
+              className={`font-questrial transition-all duration-300 pb-1 ${
+                location.pathname === path
+                  ? "text-white font-bold border-b-2 border-white"
+                  : "text-white/80 hover:text-white"
               }`}
             >
               {label}
@@ -44,7 +46,7 @@ const Navigation = () => {
         {/* Mobile Hamburger Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden p-2 text-foreground"
+          className="md:hidden p-2 text-white transition-transform duration-300 z-50"
           aria-label="Menüyü aç/kapat"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -52,26 +54,36 @@ const Navigation = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-[73px] bg-background z-40">
-          <div className="container mx-auto px-6 py-8">
-            <div className="flex flex-col space-y-6">
-              {navItems.map(({ path, label }) => (
-                <Link
-                  key={path}
-                  to={path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`font-questrial text-xl text-left py-3 border-b border-border/30 hover:bg-white/5 rounded-md px-4 transition-colors ${
-                    location.pathname === path ? "text-primary font-bold" : "text-foreground"
-                  }`}
-                >
-                  {label}
-                </Link>
-              ))}
+      <AnimatePresence mode="wait">
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="md:hidden fixed inset-0 top-0 z-40 bg-black"
+          >
+            <div className="container mx-auto px-6 py-8 h-full">
+              <div className="flex flex-col space-y-6 mt-20">
+                {navItems.map(({ path, label }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`font-questrial text-2xl text-left py-3 transition-all duration-300 ${
+                      location.pathname === path
+                        ? "text-white font-bold border-b-2 border-white inline-block w-max"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
