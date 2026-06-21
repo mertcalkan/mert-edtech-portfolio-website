@@ -140,7 +140,7 @@ const Contact = () => {
             </motion.a>
 
             <motion.div variants={itemVariant} className="flex flex-wrap justify-center gap-6 md:gap-10 text-xs md:text-base font-bold tracking-widest uppercase">
-              {['Linkedin', 'Gmail', 'Instagram', 'Youtube'].map((social) => (
+              {['Lınkedin',, 'Instagram', 'Youtube'].map((social) => (
                 <a key={social} href="#" className="hover:text-[#eaff00] transition-colors duration-300 relative group">
                   {social}
                   <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-[#eaff00] transition-all duration-300 group-hover:w-full"></span>
