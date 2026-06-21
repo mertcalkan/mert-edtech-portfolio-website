@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Loader } from "@react-three/drei"
 import Navigation from "./components/Navigation"
-
+import Projects from "./pages/Projects"
 import Index from "./pages/Index"
 import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
@@ -35,7 +35,7 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<PageWrapper><Index /></PageWrapper>} />
         <Route path="/hakkimda" element={<PageWrapper><Index /></PageWrapper>} />
         <Route path="/iletisim" element={<PageWrapper><Contact /></PageWrapper>} />
-        <Route path="/projeler" element={<PageWrapper><Index /></PageWrapper>} />
+        <Route path="/projeler" element={<PageWrapper><Projects /></PageWrapper>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
