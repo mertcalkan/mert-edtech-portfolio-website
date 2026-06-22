@@ -21,7 +21,7 @@ const Navigation = () => {
         <Link
           to="/"
           onClick={() => setIsMenuOpen(false)}
-          className="font-questrial font-bold text-2xl text-white tracking-widest"
+          className="font-satoshi font-bold text-2xl text-white tracking-widest"
         >
           MERT.
         </Link>
@@ -32,7 +32,7 @@ const Navigation = () => {
             <Link
               key={path}
               to={path}
-              className={`font-questrial transition-all duration-300 pb-1 ${
+              className={`font-satoshi transition-all duration-300 pb-1 ${
                 location.pathname === path
                   ? "text-white font-bold border-b-2 border-white"
                   : "text-white/80 hover:text-white"
@@ -70,7 +70,7 @@ const Navigation = () => {
                     key={path}
                     to={path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`font-questrial text-2xl text-left py-3 transition-all duration-300 ${
+                    className={`font-satoshi text-2xl text-left py-3 transition-all duration-300 ${
                       location.pathname === path
                         ? "text-white font-bold border-b-2 border-white inline-block w-max"
                         : "text-white/70 hover:text-white"

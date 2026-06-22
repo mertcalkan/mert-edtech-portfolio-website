@@ -2,181 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-@theme {
-  --font-questrial: "Questrial", sans-serif;
+/* Satoshi Font Tanımlaması */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
 }
 
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-VariableItalic.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
 
+@theme {
+  --font-satoshi: "Satoshi", sans-serif;
+}
 
 /* Portfolio Design System - Clean & Minimal Turkish Portfolio */
-
 @layer base {
   :root {
-    --background: 0 0% 11.4%; /* #1d1d1d */
-    --foreground: 0 0% 100%; /* white text */
-
+    --background: 0 0% 11.4%;
+    --foreground: 0 0% 100%;
     --card: 0 0% 11.4%;
     --card-foreground: 0 0% 100%;
-
     --popover: 0 0% 11.4%;
     --popover-foreground: 0 0% 100%;
-
-    /* Keep accent color but adjust for dark theme */
     --primary: 152 69% 54%;
     --primary-foreground: 0 0% 11.4%;
     --primary-muted: 152 30% 25%;
-
     --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 0 0% 20%;
     --muted-foreground: 0 0% 70%;
-
     --accent: 0 0% 25%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 0 0% 25%;
     --input: 0 0% 20%;
     --ring: 152 69% 54%;
-
-    /* Portfolio specific tokens - dark theme */
     --portfolio-hero-bg: 0 0% 11.4%;
     --portfolio-section-bg: 0 0% 13%;
     --portfolio-shadow: 0 0% 25%;
     --portfolio-shadow-soft: 0 0% 100% / 0.05;
     --portfolio-shadow-medium: 0 0% 100% / 0.1;
     --portfolio-overlay: 0 0% 0% / 0.7;
-
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-satoshi); /* Varsayılan font Satoshi oldu */
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
-  }
-
-  /* Portfolio specific animations */
-  .portfolio-fade-in {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .portfolio-fade-in-delay {
-    animation: fadeInUp 0.8s ease-out 0.3s forwards;
-    opacity: 0;
-  }
-}
-
-@layer components {
-  /* Portfolio hero section */
-  .portfolio-hero {
-    background: var(--portfolio-hero-bg);
-    min-height: 100vh;
-  }
-
-  /* Gallery hover effects */
-  .gallery-item {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
-    box-shadow: 0 4px 20px hsl(var(--portfolio-shadow-soft));
-  }
-
-  .gallery-item:hover {
-    box-shadow: 0 8px 30px hsl(var(--portfolio-shadow-medium));
-  }
-
-  /* Profile image */
-  .profile-image {
-    @apply ring-4 ring-primary/20 transition-all duration-300 hover:ring-primary/40;
-    box-shadow: 0 8px 30px hsl(var(--portfolio-shadow-soft));
-  }
-
-  /* Button variants */
-  .btn-portfolio {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 
-           px-6 py-3 rounded-full font-medium transition-all duration-300
-           shadow-md hover:shadow-lg hover:scale-105;
-  }
-
-  .btn-portfolio-outline {
-    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground
-           px-6 py-3 rounded-full font-medium transition-all duration-300
-           shadow-md hover:shadow-lg hover:scale-105;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

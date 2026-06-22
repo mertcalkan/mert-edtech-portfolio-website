@@ -19,82 +19,30 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          muted: "hsl(var(--primary-muted))",
+        // Yeni Vektörel Temalar
+        theme1: {
+          bg: "#4318FF", // Görsel 2 (Mor Selam Arka Planı)
+          shape: "#5630FF", // Morun biraz daha açık tonu
+          text: "#FFFFFF", // Metin Rengi Beyaz
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        theme2: {
+          bg: "#E34542", // Görsel (Mercan/Kırmızı) - Sabit kaldı
+          shape: "#F2B8D1", // Pembe Şekil
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        // Portfolio specific colors
-        portfolio: {
-          bg: "hsl(var(--portfolio-section-bg))",
-          shadow: "hsl(var(--portfolio-shadow))",
-          overlay: "hsl(var(--portfolio-overlay))",
-        },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        theme3: {
+          bg: "#F26322", // Görsel 1 (Turuncu Headspace Arka Planı)
+          title: "#FFFFFF", // "The magic of..." beyaz metin
+          shape: "#FFE24A", // Sarı Büyük Şekil/Metin
         },
       },
-   fontFamily: {
-        questrial: ['Questrial', 'sans-serif'], // Yeni fontumuz
+      fontFamily: {
+        satoshi: ['Satoshi', 'sans-serif'], 
+        questrial: ['Questrial', 'sans-serif'],
       },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
-        },
-        "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
