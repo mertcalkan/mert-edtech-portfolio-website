@@ -19,20 +19,20 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        // Yeni Vektörel Temalar
+        // Vektörel Temalar
         theme1: {
-          bg: "#4318FF", // Görsel 2 (Mor Selam Arka Planı)
-          shape: "#5630FF", // Morun biraz daha açık tonu
-          text: "#FFFFFF", // Metin Rengi Beyaz
+          bg: "#4318FF", // Mor Selam Arka Planı
+          shape: "#5630FF", 
+          text: "#FFFFFF", 
         },
         theme2: {
-          bg: "#E34542", // Görsel (Mercan/Kırmızı) - Sabit kaldı
-          shape: "#F2B8D1", // Pembe Şekil
+          bg: "#E34542", // Mercan
+          shape: "#F2B8D1", 
         },
         theme3: {
-          bg: "#F26322", // Görsel 1 (Turuncu Headspace Arka Planı)
-          title: "#FFFFFF", // "The magic of..." beyaz metin
-          shape: "#FFE24A", // Sarı Büyük Şekil/Metin
+          bg: "#009B77", // Yeni Görsel: Canlı Yeşil/Teal Arka Plan
+          shape: "#F6E254", // Yeni Görsel: Sarı Gülümseme/Şekil Rengi
+          title: "#002B36", // Yeni Görsel: Koyu Lacivert/Yeşil Metin
         },
       },
       fontFamily: {
