@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useIsMobile } from "../hooks/use-mobile";
 
-// --- YENİ NESİL ETKİLEŞİMLİ VEKTÖR (Çarpışma/Patlama Önleyici İç İçe Katman Mimarisi) ---
-const FloatingElement = ({ children, delay = 0, duration = 4, className, hoverProps = { scale: 1.15, rotateX: 15, rotateY: 15 }, disableTap = false, isBlurred = false, animationType = "float", isMobile = false }: any) => {
+// --- YENİ NESİL ETKİLEŞİMLİ VEKTÖR (Fizik Motorlu & İç İçe Katman Mimarisi) ---
+const FloatingElement = ({ children, delay = 0, duration = 4, className, hoverProps = { scale: 1.25, rotateX: 10, rotateY: 10 }, disableTap = false, isBlurred = false, animationType = "float", isMobile = false }: any) => {
   let animateProps: any = {};
   let transitionProps: any = {};
 
@@ -26,21 +26,19 @@ const FloatingElement = ({ children, delay = 0, duration = 4, className, hoverPr
   }
 
   return (
-    // DIŞ KATMAN: Sadece havada süzülme (orbit, drift, balloon) animasyonunu üstlenir.
     <motion.div
-      className={`absolute pointer-events-none ${className} ${isBlurred ? 'opacity-30 sm:opacity-50 sm:blur-[3px]' : 'z-20'}`}
+      className={`absolute pointer-events-none ${className} ${isBlurred ? 'opacity-30 sm:opacity-50 sm:blur-[3px]' : ''}`}
       animate={animateProps}
       transition={transitionProps}
       style={{ willChange: "transform" }}
     >
-      {/* İÇ KATMAN: Sadece Fare Etkileşimlerini (Hover/Drag) üstlenir. Böylece animasyonlar çakışıp "patlamaz". */}
       <motion.div
         drag={!isMobile} 
         dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
         dragElastic={0.1}
-        className={`w-full h-full pointer-events-auto flex items-center justify-center ${!isBlurred ? 'drop-shadow-lg sm:drop-shadow-2xl' : ''} ${!isMobile && "cursor-grab active:cursor-grabbing"}`}
+        className={`group w-full h-full pointer-events-auto flex items-center justify-center ${!isBlurred ? 'drop-shadow-lg sm:drop-shadow-2xl' : ''} ${!isMobile && "cursor-grab active:cursor-grabbing"}`}
         whileHover={!isMobile ? hoverProps : {}}
-        whileTap={!isMobile && !disableTap ? { scale: 0.9, cursor: "grabbing" } : (!isMobile ? { cursor: "grabbing" } : {})}
+        whileTap={!isMobile && !disableTap ? { scale: 0.95, cursor: "grabbing" } : (!isMobile ? { cursor: "grabbing" } : {})}
         style={{ willChange: "transform" }}
       >
         {children}
@@ -49,7 +47,7 @@ const FloatingElement = ({ children, delay = 0, duration = 4, className, hoverPr
   );
 };
 
-// --- SECTION 1: NETWORK, ZEKA & EĞİTİM VEKTÖRLERİ ---
+// --- SECTION 1: NETWORK & SATRANÇ VEKTÖRLERİ (Gülümseyen Karakterler) ---
 
 const NetworkBackground = () => (
   <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +56,6 @@ const NetworkBackground = () => (
     <line x1="60%" y1="30%" x2="80%" y2="70%" stroke="white" strokeWidth="1" strokeDasharray="4 4" />
     <line x1="30%" y1="50%" x2="20%" y2="80%" stroke="white" strokeWidth="1" strokeDasharray="4 4" />
     <line x1="60%" y1="30%" x2="85%" y2="15%" stroke="white" strokeWidth="1" strokeDasharray="4 4" />
-    
     <circle cx="10%" cy="20%" r="4" fill="white" />
     <circle cx="30%" cy="50%" r="6" fill="#FFB800" />
     <circle cx="60%" cy="30%" r="5" fill="white" />
@@ -77,13 +74,15 @@ const VectorPawn = ({ className, rotation = "0deg" }: { className?: string, rota
     <path d="M 30 45 Q 50 50 70 45 L 65 35 Q 50 40 35 35 Z" fill="#E86A33" />
     <circle cx="50" cy="22" r="18" fill="#FFFFFF" />
     <circle cx="45" cy="18" r="14" fill="#F3F4F6" />
-    {/* Gözler ve Kırpma Efekti */}
     <g className="eye">
-      <ellipse cx="43" cy="20" rx="3" ry="4.5" fill="#111" />
-      <ellipse cx="57" cy="20" rx="3" ry="4.5" fill="#111" />
-      <circle cx="42" cy="19" r="1.2" fill="#FFF" />
-      <circle cx="56" cy="19" r="1.2" fill="#FFF" />
+      <ellipse cx="43" cy="18" rx="2.5" ry="4" fill="#111" />
+      <ellipse cx="57" cy="18" rx="2.5" ry="4" fill="#111" />
+      <circle cx="42" cy="17" r="1" fill="#FFF" />
+      <circle cx="56" cy="17" r="1" fill="#FFF" />
     </g>
+    {/* Belirgin Gülümseme (Hover) */}
+    <path d="M 45 26 Q 50 26 55 26" stroke="#111" strokeWidth="2.5" strokeLinecap="round" fill="none" className="transition-opacity duration-300 group-hover:opacity-0" />
+    <path d="M 43 25 Q 50 34 57 25" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" className="opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
   </svg>
 );
 
@@ -96,61 +95,78 @@ const VectorQueen = ({ className, rotation = "0deg" }: { className?: string, rot
     <circle cx="70" cy="25" r="6" fill="#FFB800" />
     <rect x="10" y="80" width="60" height="10" rx="4" fill="#8B5CF6" />
     <rect x="20" y="70" width="40" height="5" rx="2" fill="#E86A33" />
-    {/* Gözler ve Kırpma Efekti (Gecikmeli) */}
     <g className="eye-delay">
-      <ellipse cx="32" cy="55" rx="3" ry="4.5" fill="#111" />
-      <ellipse cx="48" cy="55" rx="3" ry="4.5" fill="#111" />
-      <circle cx="31" cy="54" r="1.2" fill="#FFF" />
-      <circle cx="47" cy="54" r="1.2" fill="#FFF" />
+      <ellipse cx="33" cy="55" rx="2.5" ry="4" fill="#111" />
+      <ellipse cx="47" cy="55" rx="2.5" ry="4" fill="#111" />
+      <circle cx="32" cy="54" r="1" fill="#FFF" />
+      <circle cx="46" cy="54" r="1" fill="#FFF" />
     </g>
+    <path d="M 35 63 Q 40 63 45 63" stroke="#111" strokeWidth="2.5" strokeLinecap="round" fill="none" className="transition-opacity duration-300 group-hover:opacity-0" />
+    <path d="M 33 62 Q 40 72 47 62" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" className="opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+  </svg>
+);
+
+const VectorKing = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
+  <svg viewBox="0 0 100 120" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+    <path d="M 20 110 L 80 110 L 70 95 L 30 95 Z" fill="#E86A33" />
+    <path d="M 25 95 L 75 95 L 65 65 L 35 65 Z" fill="#FFFFFF" />
+    <path d="M 75 95 L 65 65 L 50 65 L 50 95 Z" fill="#F3F4F6" />
+    <path d="M 15 45 L 85 45 L 65 65 L 35 65 Z" fill="#FFB800" />
+    <path d="M 85 45 L 65 65 L 50 65 L 50 45 Z" fill="#F59E0B" />
+    <circle cx="15" cy="45" r="5" fill="#E86A33" />
+    <circle cx="50" cy="40" r="6" fill="#E86A33" />
+    <circle cx="85" cy="45" r="5" fill="#E86A33" />
+    <rect x="46" y="10" width="8" height="30" fill="#FFB800" />
+    <rect x="35" y="20" width="30" height="8" fill="#FFB800" />
+    <g className="eye">
+      <ellipse cx="43" cy="78" rx="2.5" ry="4" fill="#111" />
+      <ellipse cx="57" cy="78" rx="2.5" ry="4" fill="#111" />
+      <circle cx="42" cy="77" r="1" fill="#FFF" />
+      <circle cx="56" cy="77" r="1" fill="#FFF" />
+    </g>
+    <path d="M 45 86 Q 50 86 55 86" stroke="#111" strokeWidth="2.5" strokeLinecap="round" fill="none" className="transition-opacity duration-300 group-hover:opacity-0" />
+    <path d="M 43 85 Q 50 95 57 85" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" className="opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+  </svg>
+);
+
+// Tırtıklı Yapısı Düzeltilmiş Kaliteli Kale
+const VectorRook = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
+  <svg viewBox="0 0 100 120" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+    <path d="M 20 110 L 80 110 L 70 85 L 30 85 Z" fill="#E86A33" />
+    <path d="M 25 85 L 75 85 L 70 45 L 30 45 Z" fill="#FFFFFF" />
+    <path d="M 75 85 L 70 45 L 50 45 L 50 85 Z" fill="#F3F4F6" />
+    {/* Derin ve Bariz Tırtıklar */}
+    <path d="M 20 45 L 80 45 L 80 15 L 65 15 L 65 30 L 55 30 L 55 15 L 45 15 L 45 30 L 35 30 L 35 15 L 20 15 Z" fill="#FFFFFF" />
+    <path d="M 80 45 L 50 45 L 50 15 L 65 15 L 65 30 L 55 30 L 55 15 L 50 15 Z" fill="#F3F4F6" />
+    <g className="eye-delay">
+      <ellipse cx="41" cy="60" rx="2.5" ry="4" fill="#111" />
+      <ellipse cx="59" cy="60" rx="2.5" ry="4" fill="#111" />
+      <circle cx="40" cy="59" r="1" fill="#FFF" />
+      <circle cx="58" cy="59" r="1" fill="#FFF" />
+    </g>
+    <path d="M 44 69 Q 50 69 56 69" stroke="#111" strokeWidth="2.5" strokeLinecap="round" fill="none" className="transition-opacity duration-300 group-hover:opacity-0" />
+    <path d="M 42 68 Q 50 78 58 68" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" className="opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
   </svg>
 );
 
 const VectorKnight = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
   <svg viewBox="0 0 100 120" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
-    <path d="M 20 110 Q 50 120 80 110 L 75 95 Q 50 100 25 95 Z" fill="#E86A33" />
-    <path d="M 25 95 Q 50 100 75 95 L 70 85 Q 50 90 30 85 Z" fill="#D25B2A" />
-    {/* Gerçekçi At Formu */}
-    <path d="M 70 85 L 30 85 C 30 65 20 55 15 45 C 10 35 15 25 25 25 C 40 25 50 15 55 15 C 65 15 80 40 70 85 Z" fill="#FFFFFF" />
-    <path d="M 55 15 C 65 25 75 45 70 70" stroke="#FFB800" strokeWidth="6" strokeLinecap="round" fill="none" strokeDasharray="6 6" />
-    <path d="M 70 85 C 80 40 60 15 55 15 C 65 25 70 50 60 85 Z" fill="#F3F4F6" />
-    {/* Burun/Ağız Bölgesi */}
-    <path d="M 15 45 C 5 50 10 65 20 65 C 25 65 30 55 25 45 Z" fill="#E5E7EB" />
-    {/* Kulaklar */}
-    <path d="M 45 15 L 40 5 L 50 12 Z" fill="#FFFFFF" stroke="#E5E7EB" />
-    <path d="M 50 12 L 55 2 L 60 15 Z" fill="#E5E7EB" />
-    {/* Gözler (3/4 Açılı Çift Göz) */}
+    <path d="M 20 110 L 80 110 L 75 90 L 25 90 Z" fill="#E86A33" />
+    <path d="M 25 90 L 75 90 C 75 60 90 40 70 20 C 60 10 40 10 30 25 C 20 40 10 50 15 65 C 20 70 30 65 35 55 C 40 60 40 70 30 90 Z" fill="#FFFFFF" />
+    <path d="M 70 20 C 80 40 75 65 75 90" stroke="#FFB800" strokeWidth="8" strokeDasharray="5 5" fill="none" />
+    <path d="M 15 65 C 10 75 25 80 35 70" fill="#E5E7EB" />
+    <path d="M 45 15 L 40 0 L 55 10 Z" fill="#FFFFFF" />
+    <path d="M 60 18 L 65 5 L 70 15 Z" fill="#F3F4F6" />
     <g className="eye">
-      <ellipse cx="34" cy="30" rx="3" ry="4.5" fill="#111" />
-      <ellipse cx="44" cy="30" rx="3" ry="4.5" fill="#111" />
-      <circle cx="33" cy="29" r="1.2" fill="#FFF" />
-      <circle cx="43" cy="29" r="1.2" fill="#FFF" />
+      <ellipse cx="32" cy="38" rx="2.5" ry="4" fill="#111" />
+      <ellipse cx="46" cy="38" rx="2.5" ry="4" fill="#111" />
+      <circle cx="31" cy="37" r="1" fill="#FFF" />
+      <circle cx="45" cy="37" r="1" fill="#FFF" />
     </g>
-    {/* Burun Delikleri */}
-    <circle cx="15" cy="55" r="1.5" fill="#D25B2A" />
-    <circle cx="21" cy="57" r="1.5" fill="#D25B2A" />
-  </svg>
-);
-
-const VectorBrain = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg viewBox="0 0 100 80" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
-    {/* Anatomiye Uygun Lateral Beyin */}
-    <path d="M 20 45 C 15 25 30 10 50 10 C 75 10 90 25 85 45 C 80 65 65 70 50 70 C 30 70 25 60 20 45 Z" fill="#FFB800" />
-    <path d="M 20 45 C 15 25 30 10 50 10 C 75 10 90 25 85 45 C 80 65 65 70 50 70 C 30 70 25 60 20 45 Z" fill="#F59E0B" transform="scale(0.9) translate(5, 4)" />
-    {/* Serebellum (Beyincik) */}
-    <path d="M 65 65 C 80 65 85 80 70 80 C 60 80 55 70 65 65 Z" fill="#D97706" />
-    {/* Beyin Sapı */}
-    <path d="M 45 65 L 45 85 C 45 95 55 95 55 85 L 55 65 Z" fill="#B45309" />
-    {/* Sulci / Kıvrımlar */}
-    <path d="M 35 15 C 40 30 35 50 45 60 M 50 12 C 55 30 50 50 60 60 M 65 18 C 65 35 75 45 70 60 M 25 35 C 35 30 45 35 55 30" stroke="#B45309" strokeWidth="3" fill="none" strokeLinecap="round" />
-    <path d="M 30 20 C 40 15 50 15 60 18" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.5" />
-  </svg>
-);
-
-const VectorPuzzle = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
-    <path d="M20 20 L40 20 C40 10 60 10 60 20 L80 20 L80 40 C90 40 90 60 80 60 L80 80 L60 80 C60 90 40 90 40 80 L20 80 L20 60 C10 60 10 40 20 40 Z" fill="#00E5FF" stroke="#FFFFFF" strokeWidth="4"/>
-    <path d="M25 25 L35 25" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" opacity="0.5"/>
+    <circle cx="16" cy="72" r="1.5" fill="#D25B2A" />
+    <circle cx="23" cy="74" r="1.5" fill="#D25B2A" />
+    <path d="M 34 46 Q 39 46 44 46" stroke="#111" strokeWidth="2.5" strokeLinecap="round" fill="none" className="transition-opacity duration-300 group-hover:opacity-0" />
+    <path d="M 32 45 Q 39 55 46 45" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" className="opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
   </svg>
 );
 
@@ -159,19 +175,19 @@ const VectorBalloon = ({ children, className, color = "#F2B8D1", rotation = "0de
   <div className={`flex flex-col items-center ${className}`} style={{ transform: `rotate(${rotation})` }}>
      <div className="relative w-full">
        <svg viewBox="0 0 80 100" className="w-full h-auto z-10 drop-shadow-lg block">
-          <path d="M40 0 C 10 0, 0 30, 0 50 C 0 80, 30 90, 40 95 C 50 90, 80 80, 80 50 C 80 30, 70 0, 40 0 Z" fill={color} />
+          <path d="M40 0 C 10 0, 0 30, 0 50 C 0 80, 30 90, 40 95 C 50 90, 80 80, 80 50 C 80 30, 70 0, 40 0 Z" fill={color} opacity="0.85" />
           <path d="M35 95 L45 95 L40 100 Z" fill={color} />
-          <ellipse cx="22" cy="28" rx="6" ry="14" fill="white" opacity="0.3" transform="rotate(-25 22 28)" />
+          <ellipse cx="22" cy="28" rx="6" ry="14" fill="white" opacity="0.4" transform="rotate(-25 22 28)" />
        </svg>
        <div className="absolute top-[42%] left-[50%] -translate-x-1/2 -translate-y-1/2 text-[#E34542] z-20 font-black drop-shadow-sm flex items-center justify-center w-full">
           {children}
        </div>
      </div>
-     <div className="w-[2px] h-12 sm:h-20 bg-white/50 -mt-1 z-0"></div>
+     <div className="w-[2px] h-12 sm:h-20 bg-white/40 -mt-1 z-0"></div>
   </div>
 );
 
-// --- SECTION 3: MÜZİK VEKTÖRLERİ ---
+// --- SECTION 3: MÜZİK VEKTÖRLERİ (Gerçekçi Viyolin) ---
 const VectorPiano = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
   <svg width="140" height="70" viewBox="0 0 120 60" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
     <rect x="0" y="0" width="120" height="60" rx="4" fill="#ffffff" />
@@ -220,6 +236,44 @@ const VectorGuitar = ({ className, rotation = "0deg" }: { className?: string, ro
     <line x1="48" y1="5" x2="48" y2="85" stroke="#ffffff" strokeWidth="1" opacity="0.8" />
     <line x1="50" y1="5" x2="50" y2="85" stroke="#ffffff" strokeWidth="1" opacity="0.8" />
     <line x1="52" y1="5" x2="52" y2="85" stroke="#ffffff" strokeWidth="1" opacity="0.8" />
+  </svg>
+);
+
+// Yeni ve Gerçekçi Keman/Viyolin Vektörü (Yay, Teller, Gövde, F-Delikleri)
+const VectorViolin = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
+  <svg viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+    {/* Arşe (Yay) Arkada */}
+    <line x1="15" y1="85" x2="85" y2="15" stroke="#FCD34D" strokeWidth="3" strokeLinecap="round" />
+    <line x1="18" y1="82" x2="82" y2="18" stroke="#FFFFFF" strokeWidth="1.5" opacity="0.9" />
+    {/* Gövde */}
+    <path d="M 40 20 C 20 20 20 40 30 45 C 25 55 20 70 40 85 C 50 90 60 90 70 85 C 90 70 85 55 80 45 C 90 40 90 20 70 20 C 60 15 50 15 40 20 Z" fill="#B45309" />
+    {/* İç Gölge/Derinlik */}
+    <path d="M 40 20 C 20 20 20 40 30 45 C 25 55 20 70 40 85 C 50 90 60 90 70 85 C 90 70 85 55 80 45 C 90 40 90 20 70 20 Z" fill="black" opacity="0.15" transform="scale(0.9) translate(5, 5)" />
+    {/* Ahşap Işık Yansıması */}
+    <path d="M 35 25 C 25 25 25 35 30 40" stroke="#FDE68A" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.4" />
+    <path d="M 30 75 C 40 80 50 80 60 75" stroke="#FDE68A" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.4" />
+    {/* Sap (Neck) ve Klavye */}
+    <rect x="52" y="2" width="6" height="45" fill="#1f2937" transform="rotate(10 55 25)" />
+    <path d="M 52 25 L 56 24 L 50 55 L 44 55 Z" fill="#111827" />
+    {/* Salyangoz ve Burgular (Pegs) */}
+    <circle cx="62" cy="4" r="5" fill="#78350F" />
+    <line x1="58" y1="3" x2="68" y2="1" stroke="#1f2937" strokeWidth="2" />
+    <line x1="59" y1="6" x2="69" y2="4" stroke="#1f2937" strokeWidth="2" />
+    {/* F Delikleri */}
+    <path d="M 35 50 C 30 55 30 65 35 70" stroke="#111827" strokeWidth="2" fill="none" strokeLinecap="round" />
+    <circle cx="34" cy="50" r="1.5" fill="#111827" />
+    <circle cx="36" cy="70" r="1.5" fill="#111827" />
+    <path d="M 65 45 C 70 50 70 60 65 65" stroke="#111827" strokeWidth="2" fill="none" strokeLinecap="round" />
+    <circle cx="64" cy="45" r="1.5" fill="#111827" />
+    <circle cx="66" cy="65" r="1.5" fill="#111827" />
+    {/* Eşik (Bridge) ve Kuyruk */}
+    <rect x="42" y="58" width="12" height="3" fill="#D97706" rx="1" />
+    <path d="M 45 70 L 51 68 L 48 85 L 42 85 Z" fill="#1f2937" />
+    {/* Gerçekçi İnce Teller (Strings) */}
+    <line x1="53" y1="5" x2="44" y2="80" stroke="#E5E7EB" strokeWidth="0.5" />
+    <line x1="54.5" y1="5" x2="45.5" y2="80" stroke="#E5E7EB" strokeWidth="0.5" />
+    <line x1="56" y1="5" x2="47" y2="80" stroke="#E5E7EB" strokeWidth="0.5" />
+    <line x1="57.5" y1="5" x2="48.5" y2="80" stroke="#E5E7EB" strokeWidth="0.5" />
   </svg>
 );
 
@@ -294,25 +348,26 @@ const Index = () => {
         transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }} 
       >
         
-        {/* SECTION 1 - YEŞİL TEMA (Satranç & Zeka & Developer) */}
+        {/* SECTION 1 - YEŞİL TEMA (Satranç & Developer) */}
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme1-bg overflow-hidden text-theme1-text selection:bg-white/30">
           
           <NetworkBackground />
 
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-             <FloatingElement isMobile={isMobile} isBlurred animationType="orbit" className="top-[10%] right-[10%] md:top-[15%] md:right-[20%]" delay={2} duration={12}>
+          <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+             {/* Arka plan bulanık elementleri, mobilde merkeze (yazı üstüne) gelmeyecek şekilde kenarlara itildi */}
+             <FloatingElement isMobile={isMobile} isBlurred animationType="orbit" className="top-[5%] right-[5%] sm:top-[15%] sm:right-[20%]" delay={2} duration={12}>
                <VectorQueen className="w-12 h-16 sm:w-16 sm:h-20" rotation="25deg" />
              </FloatingElement>
-             <FloatingElement isMobile={isMobile} isBlurred animationType="drift" className="bottom-[15%] left-[5%] md:bottom-[10%] md:left-[35%]" delay={1} duration={15}>
-               <VectorPuzzle className="w-12 h-12 sm:w-16 sm:h-16" rotation="-40deg" />
+             <FloatingElement isMobile={isMobile} isBlurred animationType="drift" className="bottom-[10%] left-[5%] sm:bottom-[10%] sm:left-[35%]" delay={1} duration={15}>
+               <VectorRook className="w-12 h-16 sm:w-16 sm:h-20" rotation="-20deg" />
              </FloatingElement>
-             <FloatingElement isMobile={isMobile} isBlurred animationType="float" className="top-[60%] left-[10%] md:top-[70%] md:left-[15%]" delay={0.5} duration={10}>
+             <FloatingElement isMobile={isMobile} isBlurred animationType="float" className="top-[80%] left-[5%] sm:top-[70%] sm:left-[15%]" delay={0.5} duration={10}>
                <VectorPawn className="w-8 h-12 sm:w-12 sm:h-16" rotation="-15deg" />
              </FloatingElement>
           </div>
 
-          <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center w-full pointer-events-none">
-            <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 0 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-8 sm:mt-0">
+          <div className="container mx-auto px-6 relative z-40 text-center flex flex-col items-center w-full pointer-events-none">
+            <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 0 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Merhaba, ben Mert.</motion.h1>
               <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] font-bold tracking-tight mb-8 leading-none">Eğitim Teknolojileri Geliştiricisi</motion.h2>
               <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-wide text-white">Eğitim teknolojileri üzerine alışılagelmişin dışında uygulamalar geliştiriyorum. Amacım, öğrenme süreçlerini sıkıcı ezber kalıplarından kurtararak teknolojinin sunduğu imkanlarla interaktif bir hale getirmek.</motion.p>
@@ -320,20 +375,24 @@ const Index = () => {
           </div>
 
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-             {/* Piyon: İleri ve yukarı (küçük) hamle */}
-             <FloatingElement hoverProps={{ y: -30, scale: 1.15 }} isMobile={isMobile} animationType="float" className="bottom-[20%] left-[8%] md:bottom-[25%] md:left-[15%]" delay={0} duration={6}>
+             {/* Net Kale: Hover Jitter'ı çözüldü, X/Y yerine Scale ve Rotate kullanıldı */}
+             <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="float" className="top-[85%] right-[15%] sm:top-[50%] sm:left-[25%]" delay={1.2} duration={9}>
+               <VectorRook className="w-14 h-16 sm:w-16 sm:h-24" rotation="-5deg" />
+             </FloatingElement>
+             {/* Net Piyon */}
+             <FloatingElement hoverProps={{ scale: 1.25, rotate: 5 }} isMobile={isMobile} animationType="float" className="bottom-[15%] left-[8%] sm:bottom-[25%] sm:left-[15%]" delay={0} duration={6}>
                <VectorPawn className="w-14 h-20 sm:w-20 sm:h-28" rotation="-10deg" />
              </FloatingElement>
-             {/* Beyin: Yaratıcılık dalgalanması (Pulse) */}
-             <FloatingElement hoverProps={{ scale: [1, 1.15, 1], rotate: [0, -5, 5, 0], transition: { repeat: Infinity, duration: 1.5 } }} isMobile={isMobile} animationType="drift" className="top-[15%] left-[5%] md:top-[20%] md:left-[12%]" delay={1.5} duration={8}>
-               <VectorBrain className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32" rotation="10deg" />
+             {/* Net Şah (King): Parlama efekti ile birlikte */}
+             <FloatingElement hoverProps={{ filter: "drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.8))", scale: 1.15 }} isMobile={isMobile} animationType="drift" className="top-[15%] left-[5%] sm:top-[20%] sm:left-[12%]" delay={1.5} duration={8}>
+               <VectorKing className="w-16 h-24 sm:w-24 sm:h-32" rotation="10deg" />
              </FloatingElement>
-             {/* Vezir: Altın ışık yayma efekti */}
-             <FloatingElement hoverProps={{ filter: "drop-shadow(0px 0px 25px rgba(255, 184, 0, 1))", scale: 1.1 }} isMobile={isMobile} animationType="orbit" className="bottom-[15%] right-[5%] md:bottom-[20%] md:right-[15%]" delay={0.8} duration={10}>
+             {/* Net Vezir: Şah ile uyumlu parlama */}
+             <FloatingElement hoverProps={{ filter: "drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.8))", scale: 1.15 }} isMobile={isMobile} animationType="orbit" className="bottom-[20%] right-[5%] sm:bottom-[20%] sm:right-[15%]" delay={0.8} duration={10}>
                <VectorQueen className="w-16 h-20 sm:w-24 sm:h-32" rotation="15deg" />
              </FloatingElement>
-             {/* Satranç Atı (L Hamlesi - Sola ve Yukarı Sekme) */}
-             <FloatingElement hoverProps={{ x: -30, y: -40, scale: 1.15 }} isMobile={isMobile} animationType="float" className="top-[25%] right-[5%] md:top-[30%] md:right-[12%]" delay={2} duration={7}>
+             {/* Net At (Knight) */}
+             <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="float" className="top-[25%] right-[5%] sm:top-[30%] sm:right-[12%]" delay={2} duration={7}>
                <VectorKnight className="w-16 h-20 sm:w-20 sm:h-28" rotation="15deg" />
              </FloatingElement>
           </div>
@@ -342,63 +401,61 @@ const Index = () => {
         {/* SECTION 2 - MERCAN TEMA (Fiziksel Savrulma Etkileşimli Uçan Balonlar) */}
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme2-bg overflow-hidden text-white selection:bg-white/30">
           
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            {/* Arka Plan Bulanık Balonlar -> disableTap=true (Tıklanınca küçülmez), hoverProps ile rüzgar/itilme etkisi */}
-            <FloatingElement disableTap={true} hoverProps={{ x: -40, y: -20, rotate: -15 }} isMobile={isMobile} isBlurred animationType="balloon" className="left-[15%] sm:left-[25%]" delay={0} duration={9}>
+          <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+            {/* Arka Plan Bulanık Balonlar */}
+            <FloatingElement disableTap={true} hoverProps={{ x: -60, y: -20, rotate: -35, transition: { type: "spring", stiffness: 150, damping: 12 } }} isMobile={isMobile} isBlurred animationType="balloon" className="left-[5%] sm:left-[25%]" delay={0} duration={9}>
               <VectorBalloon color="#F2B8D1" className="w-12 sm:w-20 lg:w-24 text-[5vw] sm:text-[35px]" rotation="-5deg">÷</VectorBalloon>
             </FloatingElement>
-            <FloatingElement disableTap={true} hoverProps={{ x: 40, y: -30, rotate: 20 }} isMobile={isMobile} isBlurred animationType="balloon" className="right-[10%] sm:right-[15%]" delay={4} duration={12}>
+            <FloatingElement disableTap={true} hoverProps={{ x: 50, y: -40, rotate: 30, transition: { type: "spring", stiffness: 150, damping: 12 } }} isMobile={isMobile} isBlurred animationType="balloon" className="right-[5%] sm:right-[15%]" delay={4} duration={12}>
               <VectorBalloon color="#FFE24A" className="w-10 sm:w-16 lg:w-20 text-[4vw] sm:text-[30px]" rotation="10deg">=</VectorBalloon>
             </FloatingElement>
-            <FloatingElement disableTap={true} hoverProps={{ x: -20, y: -40, rotate: -10 }} isMobile={isMobile} isBlurred animationType="balloon" className="left-[40%] sm:left-[50%]" delay={2} duration={15}>
+            <FloatingElement disableTap={true} hoverProps={{ x: -30, y: -60, rotate: -20, transition: { type: "spring", stiffness: 150, damping: 12 } }} isMobile={isMobile} isBlurred animationType="balloon" className="left-[80%] sm:left-[50%]" delay={2} duration={15}>
                <VectorBalloon color="#FFFFFF" className="w-10 sm:w-14 lg:w-16 text-[4vw] sm:text-[25px]" rotation="-8deg">-</VectorBalloon>
+            </FloatingElement>
+            
+            {/* Ön Plan Net Balonlar */}
+            <FloatingElement disableTap={true} hoverProps={{ x: 70, y: -30, rotate: 40, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="right-[5%] sm:right-[20%]" delay={1} duration={8}>
+              <VectorBalloon color="#F2B8D1" className="w-16 sm:w-24 lg:w-32 text-[6vw] sm:text-[50px]" rotation="8deg">5</VectorBalloon>
+            </FloatingElement>
+            <FloatingElement disableTap={true} hoverProps={{ x: -80, y: -40, rotate: -45, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="left-[2%] sm:left-[10%]" delay={5} duration={10}>
+              <VectorBalloon color="#FFE24A" className="w-20 sm:w-28 lg:w-40 text-[7vw] sm:text-[60px]" rotation="-12deg">
+                <span>2<sup className="text-[4vw] sm:text-[30px] lg:text-[35px] ml-1">3</sup></span>
+              </VectorBalloon>
+            </FloatingElement>
+            <FloatingElement disableTap={true} hoverProps={{ x: -60, y: 50, rotate: -30, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="left-[15%] sm:left-[25%]" delay={3} duration={11}>
+              <VectorBalloon color="#FFFFFF" className="w-14 sm:w-20 lg:w-28 text-[5vw] sm:text-[40px]" rotation="12deg">×</VectorBalloon>
+            </FloatingElement>
+            <FloatingElement disableTap={true} hoverProps={{ x: 60, y: 40, rotate: 35, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="right-[15%] sm:right-[30%]" delay={7} duration={9}>
+              <VectorBalloon color="#FFFFFF" className="w-16 sm:w-24 lg:w-32 text-[6vw] sm:text-[50px]" rotation="-5deg">+</VectorBalloon>
             </FloatingElement>
           </div>
 
-          <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center w-full pointer-events-none">
-            <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 1 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-8 sm:mt-0">
+          <div className="container mx-auto px-6 relative z-40 text-center flex flex-col items-center w-full pointer-events-none">
+            <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 1 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Oyunlaştırılmış</motion.h1>
               <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-theme2-shape tracking-tight mb-8 leading-none">özel ürünler</motion.h2>
               <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-wide text-white">İngilizce, müzik, bilişim teknolojileri, matematik ve yaratıcı kodlama alanlarında prototipler tasarlıyorum. Sıradan arayüzlerin aksine akılda kalıcı, sade ama etkileşimli metotları tercih ediyorum.</motion.p>
             </motion.div>
           </div>
-
-          <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-            {/* Ön Plan Net Balonlar -> disableTap=true, Fare yaklaşınca fiziksel olarak kaçış/savrulma animasyonları */}
-            <FloatingElement disableTap={true} hoverProps={{ x: 50, y: -10, rotate: 25 }} isMobile={isMobile} animationType="balloon" className="right-[5%] sm:right-[20%]" delay={1} duration={8}>
-              <VectorBalloon color="#F2B8D1" className="w-16 sm:w-24 lg:w-32 text-[6vw] sm:text-[50px]" rotation="8deg">5</VectorBalloon>
-            </FloatingElement>
-            <FloatingElement disableTap={true} hoverProps={{ x: -50, y: -30, rotate: -25 }} isMobile={isMobile} animationType="balloon" className="left-[2%] sm:left-[10%]" delay={5} duration={10}>
-              <VectorBalloon color="#FFE24A" className="w-20 sm:w-28 lg:w-40 text-[7vw] sm:text-[60px]" rotation="-12deg">
-                <span>2<sup className="text-[4vw] sm:text-[30px] lg:text-[35px] ml-1">3</sup></span>
-              </VectorBalloon>
-            </FloatingElement>
-            <FloatingElement disableTap={true} hoverProps={{ x: -40, y: 40, rotate: -20 }} isMobile={isMobile} animationType="balloon" className="left-[15%] sm:left-[25%]" delay={3} duration={11}>
-              <VectorBalloon color="#FFFFFF" className="w-14 sm:w-20 lg:w-28 text-[5vw] sm:text-[40px]" rotation="12deg">×</VectorBalloon>
-            </FloatingElement>
-            <FloatingElement disableTap={true} hoverProps={{ x: 40, y: 30, rotate: 30 }} isMobile={isMobile} animationType="balloon" className="right-[15%] sm:right-[30%]" delay={7} duration={9}>
-              <VectorBalloon color="#FFFFFF" className="w-16 sm:w-24 lg:w-32 text-[6vw] sm:text-[50px]" rotation="-5deg">+</VectorBalloon>
-            </FloatingElement>
-          </div>
         </section>
 
-        {/* SECTION 3 - MOR TEMA (Gerçekçi Müzik) */}
+        {/* SECTION 3 - MOR TEMA (Gerçekçi Müzik & Viyolin) */}
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme3-bg overflow-hidden text-theme3-title selection:bg-theme3-shape/40">
           
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <FloatingElement isMobile={isMobile} isBlurred animationType="drift" className="top-[50%] left-[2%] sm:left-[5%] md:top-[45%] md:left-[5%]" delay={2.5} duration={14}>
+          <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+            <FloatingElement isMobile={isMobile} isBlurred animationType="drift" className="top-[80%] left-[5%] sm:top-[45%] sm:left-[5%]" delay={2.5} duration={14}>
                <VectorNotes className="scale-50 sm:scale-75" rotation="-20deg" />
             </FloatingElement>
-            <FloatingElement isMobile={isMobile} isBlurred animationType="orbit" className="bottom-[5%] left-[30%] sm:left-[40%] md:bottom-[10%] md:left-[45%]" delay={1} duration={12}>
+            <FloatingElement isMobile={isMobile} isBlurred animationType="orbit" className="bottom-[5%] left-[75%] sm:bottom-[10%] sm:left-[45%]" delay={1} duration={12}>
                <VectorDrum className="scale-50 sm:scale-75" rotation="-10deg" />
             </FloatingElement>
-            <FloatingElement isMobile={isMobile} isBlurred animationType="float" className="top-[5%] right-[10%] sm:right-[30%] md:top-[8%] md:right-[35%]" delay={1.8} duration={8}>
+            <FloatingElement isMobile={isMobile} isBlurred animationType="float" className="top-[5%] right-[5%] sm:top-[8%] sm:right-[35%]" delay={1.8} duration={8}>
                <VectorPiano className="scale-50 sm:scale-75" rotation="30deg" />
             </FloatingElement>
           </div>
 
-          <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center w-full pointer-events-none">
-            <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 2 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-8 sm:mt-0">
+          <div className="container mx-auto px-6 relative z-40 text-center flex flex-col items-center w-full pointer-events-none">
+            <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 2 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] font-black tracking-tight mb-2 drop-shadow-md leading-none break-words text-theme3-title">Mikro Seviyede</motion.h1>
               <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-theme3-shape tracking-tight mb-8 leading-none drop-shadow-sm">öğrenme</motion.h2>
               <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-wide text-white">Geliştirdiğim ürünler genelde mikro seviyede kavramların öğrenilmesi üzerine kurulu yaratıcı örneklerdir. Kullanıcının kafasının karışmaması adına ürünlerimi minimal ölçütte tutmayı tercih ediyorum.</motion.p>
@@ -406,17 +463,21 @@ const Index = () => {
           </div>
 
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-            <FloatingElement isMobile={isMobile} animationType="orbit" className="top-[5%] left-[2%] sm:top-[10%] sm:left-[5%] md:top-[15%] md:left-[10%]" delay={0.5} duration={10}>
+            <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="orbit" className="top-[10%] left-[5%] sm:top-[10%] sm:left-[5%] md:top-[15%] md:left-[10%]" delay={0.5} duration={10}>
                <VectorPiano className="scale-75 sm:scale-100" rotation="-15deg" />
             </FloatingElement>
-            <FloatingElement isMobile={isMobile} animationType="float" className="bottom-[15%] left-[2%] sm:bottom-[20%] sm:left-[8%] md:bottom-[20%] md:left-[15%]" delay={1.5} duration={6}>
+            <FloatingElement hoverProps={{ scale: 1.25, rotate: 5 }} isMobile={isMobile} animationType="float" className="bottom-[15%] left-[5%] sm:bottom-[20%] sm:left-[8%] md:bottom-[20%] md:left-[15%]" delay={1.5} duration={6}>
                <VectorNotes className="scale-75 sm:scale-100" rotation="10deg" />
             </FloatingElement>
-            <FloatingElement isMobile={isMobile} animationType="drift" className="top-[15%] right-[2%] sm:top-[20%] sm:right-[5%] md:top-[15%] md:right-[10%]" delay={0.8} duration={12}>
+            <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="drift" className="top-[20%] right-[5%] sm:top-[20%] sm:right-[5%] md:top-[15%] md:right-[10%]" delay={0.8} duration={12}>
                <VectorDrum className="scale-75 sm:scale-100" rotation="20deg" />
             </FloatingElement>
-            <FloatingElement isMobile={isMobile} animationType="float" className="bottom-[10%] right-[5%] sm:bottom-[15%] sm:right-[10%] md:bottom-[15%] md:right-[15%]" delay={2} duration={7}>
+            <FloatingElement hoverProps={{ scale: 1.25, rotate: 5 }} isMobile={isMobile} animationType="float" className="bottom-[15%] right-[10%] sm:bottom-[15%] sm:right-[10%] md:bottom-[15%] md:right-[15%]" delay={2} duration={7}>
                <VectorGuitar className="scale-75 sm:scale-100" rotation="-25deg" />
+            </FloatingElement>
+            {/* Yepyeni Viyolin Eklendi */}
+            <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="orbit" className="top-[45%] right-[15%] sm:top-[50%] sm:right-[25%]" delay={2.5} duration={11}>
+               <VectorViolin className="scale-75 sm:scale-100" rotation="15deg" />
             </FloatingElement>
           </div>
         </section>
