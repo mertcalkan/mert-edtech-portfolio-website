@@ -29,11 +29,13 @@ export default {
           bg: "#E34542", // Mercan
           shape: "#F2B8D1", 
         },
-        theme3: {
-          bg: "#009B77", // Yeni Görsel: Canlı Yeşil/Teal Arka Plan
-          shape: "#F6E254", // Yeni Görsel: Sarı Gülümseme/Şekil Rengi
-          title: "#002B36", // Yeni Görsel: Koyu Lacivert/Yeşil Metin
-        },
+ theme3: {
+  bg: "#6A0DAD",   // Mor Arka Plan
+  shape: "#E0B0FF", // Açık Lila Şekil Rengi
+  title: "#FFFFFF", // Açık Mor/Lila Metin Rengi (bg’den daha açık)
+}
+
+
       },
       fontFamily: {
         satoshi: ['Satoshi', 'sans-serif'], 
