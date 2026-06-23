@@ -197,9 +197,9 @@ const VectorBalloon = ({ children, className, color = "#F2B8D1", rotation = "0de
   </div>
 );
 
-// --- SECTION 3: MÜZİK VEKTÖRLERİ (Gerçekçi Viyolin & Flüt) ---
+// --- SECTION 3: MÜZİK VEKTÖRLERİ (Gerçekçi Viyolin & Trompet) ---
 const VectorPiano = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg width="140" height="70" viewBox="0 0 120 60" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+  <svg viewBox="0 0 120 60" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
     <rect x="0" y="0" width="120" height="60" rx="4" fill="#ffffff" fillOpacity="0.25" stroke="#ffffff" strokeOpacity="0.6" strokeWidth="4" />
     <rect x="0" y="55" width="120" height="5" rx="2" fill="#ffffff" fillOpacity="0.1" /> 
     {[20,40,60,80,100].map(x => <line key={x} x1={x} y1="0" x2={x} y2="60" stroke="#ffffff" strokeOpacity="0.3" strokeWidth="3"/>)}
@@ -213,7 +213,7 @@ const VectorPiano = ({ className, rotation = "0deg" }: { className?: string, rot
 );
 
 const VectorDrum = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg width="100" height="100" viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+  <svg viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
     <path d="M10 30 C 10 10, 90 10, 90 30 L 90 70 C 90 90, 10 90, 10 70 Z" fill="#FFE24A" fillOpacity="0.5" />
     <path d="M10 30 C 10 10, 90 10, 90 30 L 90 70 C 90 90, 10 90, 10 70 Z" fill="black" opacity="0.1" /> 
     <ellipse cx="50" cy="30" rx="40" ry="15" fill="#ffffff" fillOpacity="0.2" stroke="#ffffff" strokeOpacity="0.7" strokeWidth="4" />
@@ -226,7 +226,7 @@ const VectorDrum = ({ className, rotation = "0deg" }: { className?: string, rota
 );
 
 const VectorNotes = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg width="90" height="90" viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+  <svg viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
     <path d="M30 70 C 20 70, 15 75, 15 80 C 15 85, 20 90, 30 90 C 40 90, 45 85, 45 80 L 45 30 L 85 20 L 85 65 C 75 65, 70 70, 70 75 C 70 80, 75 85, 85 85 C 95 85, 100 80, 100 75 L 100 10 L 40 20 Z" fill="#ffffff" fillOpacity="0.25" stroke="#ffffff" strokeOpacity="0.7" strokeWidth="4" />
     <ellipse cx="25" cy="80" rx="4" ry="8" fill="black" opacity="0.1" transform="rotate(-30 25 80)" />
     <ellipse cx="80" cy="75" rx="4" ry="8" fill="black" opacity="0.1" transform="rotate(-30 80 75)" />
@@ -234,7 +234,7 @@ const VectorNotes = ({ className, rotation = "0deg" }: { className?: string, rot
 );
 
 const VectorGuitar = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg width="110" height="110" viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+  <svg viewBox="0 0 100 100" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
     <path d="M45 5 L 55 5 L 55 45 L 45 45 Z" fill="#374151" fillOpacity="0.8" />
     <line x1="45" y1="15" x2="55" y2="15" stroke="#9CA3AF" strokeWidth="2" />
     <line x1="45" y1="25" x2="55" y2="25" stroke="#9CA3AF" strokeWidth="2" />
@@ -277,17 +277,29 @@ const VectorViolin = ({ className, rotation = "0deg" }: { className?: string, ro
   </svg>
 );
 
-const VectorFlute = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
-  <svg width="120" height="30" viewBox="0 0 120 30" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
-    <rect x="5" y="5" width="110" height="20" rx="10" fill="#ffffff" fillOpacity="0.25" stroke="#ffffff" strokeOpacity="0.8" strokeWidth="3" />
-    <rect x="5" y="5" width="110" height="20" rx="10" fill="#E5E7EB" fillOpacity="0.1" />
-    <path d="M 5 15 Q 5 5 15 5 L 25 5 L 25 25 L 15 25 Q 5 25 5 15 Z" fill="#ffffff" fillOpacity="0.4" />
-    <circle cx="40" cy="15" r="3" fill="#111827" fillOpacity="0.8" />
-    <circle cx="55" cy="15" r="3" fill="#111827" fillOpacity="0.8" />
-    <circle cx="70" cy="15" r="3" fill="#111827" fillOpacity="0.8" />
-    <circle cx="85" cy="15" r="3" fill="#111827" fillOpacity="0.8" />
-    <circle cx="100" cy="15" r="3" fill="#111827" fillOpacity="0.8" />
-    <line x1="20" y1="10" x2="105" y2="10" stroke="#ffffff" strokeWidth="2" opacity="0.6" strokeLinecap="round" />
+const VectorTrumpet = ({ className, rotation = "0deg" }: { className?: string, rotation?: string }) => (
+  <svg viewBox="0 0 120 50" className={`${className}`} style={{ transform: `rotate(${rotation})` }}>
+    {/* Mouthpiece */}
+    <path d="M 5 22 L 15 22 L 15 28 L 5 28 Z" fill="#E5E7EB" opacity="0.8" />
+    <ellipse cx="5" cy="25" rx="3" ry="6" fill="#D1D5DB" />
+    {/* Main Tube */}
+    <path d="M 15 23 L 80 23 L 80 27 L 15 27 Z" fill="#FCD34D" fillOpacity="0.9" />
+    <path d="M 15 23 L 80 23 L 80 25 L 15 25 Z" fill="#FFFFFF" fillOpacity="0.5" />
+    {/* Lower looping tube */}
+    <path d="M 35 27 C 35 45, 75 45, 75 27" fill="none" stroke="#FCD34D" strokeWidth="4" strokeOpacity="0.9" />
+    <path d="M 35 27 C 35 45, 75 45, 75 27" fill="none" stroke="#FFFFFF" strokeWidth="1.5" strokeOpacity="0.5" />
+    {/* Valves */}
+    <rect x="42" y="10" width="6" height="25" fill="#F59E0B" fillOpacity="0.9" rx="1" />
+    <rect x="52" y="10" width="6" height="25" fill="#F59E0B" fillOpacity="0.9" rx="1" />
+    <rect x="62" y="10" width="6" height="25" fill="#F59E0B" fillOpacity="0.9" rx="1" />
+    {/* Valve caps */}
+    <rect x="41" y="6" width="8" height="4" fill="#E5E7EB" fillOpacity="0.9" rx="1" />
+    <rect x="51" y="6" width="8" height="4" fill="#E5E7EB" fillOpacity="0.9" rx="1" />
+    <rect x="61" y="6" width="8" height="4" fill="#E5E7EB" fillOpacity="0.9" rx="1" />
+    {/* Bell */}
+    <path d="M 80 20 C 95 20, 105 5, 115 5 L 115 45 C 105 45, 95 30, 80 30 Z" fill="#F59E0B" fillOpacity="0.85" />
+    <path d="M 80 20 C 95 20, 100 12, 110 8 C 100 18, 90 23, 80 23 Z" fill="#FFFFFF" fillOpacity="0.4" />
+    <ellipse cx="115" cy="25" rx="4" ry="20" fill="#D97706" fillOpacity="0.9" />
   </svg>
 );
 
@@ -368,18 +380,15 @@ const Index = () => {
 
           <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
              <FloatingElement isMobile={isMobile} isBlurred animationType="orbit" className="top-[5%] right-[5%] sm:top-[15%] sm:right-[20%]" delay={2} duration={12}>
-               {/* Sadece vezir bulanık bırakıldı, piyon ve kale silindi */}
                <VectorQueen className="w-12 h-16 sm:w-16 sm:h-20" rotation="25deg" />
              </FloatingElement>
           </div>
 
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-             {/* md:hidden kale masaüstünde zaten görünmüyor */}
              <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="float" className="md:hidden lg:hidden xl:hidden block top-[85%] right-[15%] sm:top-[50%] sm:left-[25%]" delay={1.2} duration={9}>
                <VectorRook className="w-14 h-16 sm:w-16 sm:h-24" rotation="-5deg" />
              </FloatingElement>
              
-             {/* Dev ekranlarda (xl, 2xl) tam boyutlandırmalar eklendi */}
              <FloatingElement hoverProps={{ scale: 1.25, rotate: 5 }} isMobile={isMobile} animationType="float" className="bottom-[15%] left-[8%] sm:bottom-[25%] sm:left-[15%] blur-[1px]" delay={0} duration={6}>
                <VectorPawn className="w-14 h-20 sm:w-20 sm:h-28 xl:w-32 xl:h-40 2xl:w-40 2xl:h-48" rotation="-10deg" />
              </FloatingElement>
@@ -396,9 +405,9 @@ const Index = () => {
 
           <div className="container mx-auto px-6 relative z-40 text-center flex flex-col items-center w-full pointer-events-none">
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 0 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
-              <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Merhaba, ben Mert.</motion.h1>
-              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] font-bold tracking-tight mb-8 leading-none">Eğitim Teknolojileri Geliştiricisi</motion.h2>
-              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-wide text-white">Eğitim teknolojileri üzerine alışılagelmişin dışında uygulamalar geliştiriyorum. Amacım, öğrenme süreçlerini sıkıcı ezber kalıplarından kurtararak teknolojinin sunduğu imkanlarla interaktif bir hale getirmek.</motion.p>
+              <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Merhaba, ben Mert.</motion.h1>
+              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold tracking-tight mb-8 leading-none">Eğitim Teknolojileri Geliştiricisi</motion.h2>
+              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Eğitim teknolojileri üzerine alışılagelmişin dışında uygulamalar geliştiriyorum. Amacım, öğrenme süreçlerini sıkıcı ezber kalıplarından kurtararak teknolojinin sunduğu imkanlarla interaktif bir hale getirmek.</motion.p>
             </motion.div>
           </div>
 
@@ -409,72 +418,70 @@ const Index = () => {
           
           <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
             <FloatingElement disableTap={true} hoverProps={{ x: -60, y: -20, rotate: -35, transition: { type: "spring", stiffness: 150, damping: 12 } }} isMobile={isMobile} isBlurred animationType="balloon" className="left-[5%] sm:left-[25%]" delay={0} duration={9}>
-              <VectorBalloon color="#F2B8D1" className="w-12 sm:w-20 lg:w-24 text-[5vw] sm:text-[35px]" rotation="-5deg">÷</VectorBalloon>
+              <VectorBalloon color="#F2B8D1" className="w-12 sm:w-20 lg:w-24 xl:w-32 2xl:w-40 text-[5vw] sm:text-[35px] xl:text-[45px] 2xl:text-[60px]" rotation="-5deg">÷</VectorBalloon>
             </FloatingElement>
             <FloatingElement disableTap={true} hoverProps={{ x: 50, y: -40, rotate: 30, transition: { type: "spring", stiffness: 150, damping: 12 } }} isMobile={isMobile} isBlurred animationType="balloon" className="right-[5%] sm:right-[15%]" delay={4} duration={12}>
-              <VectorBalloon color="#FFE24A" className="w-10 sm:w-16 lg:w-20 text-[4vw] sm:text-[30px]" rotation="10deg">=</VectorBalloon>
+              <VectorBalloon color="#FFE24A" className="w-10 sm:w-16 lg:w-20 xl:w-28 2xl:w-36 text-[4vw] sm:text-[30px] xl:text-[40px] 2xl:text-[50px]" rotation="10deg">=</VectorBalloon>
             </FloatingElement>
             <FloatingElement disableTap={true} hoverProps={{ x: -30, y: -60, rotate: -20, transition: { type: "spring", stiffness: 150, damping: 12 } }} isMobile={isMobile} isBlurred animationType="balloon" className="left-[80%] sm:left-[50%]" delay={2} duration={15}>
-               <VectorBalloon color="#FFFFFF" className="w-10 sm:w-14 lg:w-16 text-[4vw] sm:text-[25px]" rotation="-8deg">-</VectorBalloon>
+               <VectorBalloon color="#FFFFFF" className="w-10 sm:w-14 lg:w-16 xl:w-24 2xl:w-32 text-[4vw] sm:text-[25px] xl:text-[35px] 2xl:text-[45px]" rotation="-8deg">-</VectorBalloon>
             </FloatingElement>
             
             <FloatingElement disableTap={true} hoverProps={{ x: 70, y: -30, rotate: 40, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="right-[5%] sm:right-[20%] blur-[1px]" delay={1} duration={8}>
-              <VectorBalloon color="#F2B8D1" className="w-16 sm:w-24 lg:w-32 text-[6vw] sm:text-[50px]" rotation="8deg">5</VectorBalloon>
+              <VectorBalloon color="#F2B8D1" className="w-16 sm:w-24 lg:w-32 xl:w-40 2xl:w-56 text-[6vw] sm:text-[50px] xl:text-[60px] 2xl:text-[80px]" rotation="8deg">5</VectorBalloon>
             </FloatingElement>
             <FloatingElement disableTap={true} hoverProps={{ x: -80, y: -40, rotate: -45, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="left-[2%] sm:left-[10%]" delay={5} duration={10}>
-              <VectorBalloon color="#FFE24A" className="w-20 sm:w-28 lg:w-40 text-[7vw] sm:text-[60px]" rotation="-12deg">
-                <span>2<sup className="text-[4vw] sm:text-[30px] lg:text-[35px] ml-1">3</sup></span>
+              <VectorBalloon color="#FFE24A" className="w-20 sm:w-28 lg:w-40 xl:w-52 2xl:w-72 text-[7vw] sm:text-[60px] xl:text-[80px] 2xl:text-[100px]" rotation="-12deg">
+                <span>2<sup className="text-[4vw] sm:text-[30px] lg:text-[35px] xl:text-[45px] 2xl:text-[60px] ml-1">3</sup></span>
               </VectorBalloon>
             </FloatingElement>
             <FloatingElement disableTap={true} hoverProps={{ x: -60, y: 50, rotate: -30, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="left-[15%] sm:left-[25%] blur-sm" delay={3} duration={11}>
-              <VectorBalloon color="#FFFFFF" className="w-14 sm:w-20 lg:w-28 text-[5vw] sm:text-[40px]" rotation="12deg">×</VectorBalloon>
+              <VectorBalloon color="#FFFFFF" className="w-14 sm:w-20 lg:w-28 xl:w-36 2xl:w-48 text-[5vw] sm:text-[40px] xl:text-[50px] 2xl:text-[70px]" rotation="12deg">×</VectorBalloon>
             </FloatingElement>
             <FloatingElement disableTap={true} hoverProps={{ x: 60, y: 40, rotate: 35, transition: { type: "spring", stiffness: 200, damping: 15 } }} isMobile={isMobile} animationType="balloon" className="right-[15%] sm:right-[30%]" delay={7} duration={9}>
-              <VectorBalloon color="#FFFFFF" className="w-16 sm:w-24 lg:w-32 text-[6vw] sm:text-[50px]" rotation="-5deg">+</VectorBalloon>
+              <VectorBalloon color="#FFFFFF" className="w-16 sm:w-24 lg:w-32 xl:w-40 2xl:w-56 text-[6vw] sm:text-[50px] xl:text-[65px] 2xl:text-[85px]" rotation="-5deg">+</VectorBalloon>
             </FloatingElement>
           </div>
 
           <div className="container mx-auto px-6 relative z-30 text-center flex flex-col items-center w-full pointer-events-none">
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 1 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
-              <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Oyunlaştırılmış</motion.h1>
-              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-theme2-shape tracking-tight mb-8 leading-none">özel ürünler</motion.h2>
-              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-wide text-white">İngilizce, müzik, bilişim teknolojileri, matematik ve yaratıcı kodlama alanlarında prototipler tasarlıyorum. Sıradan arayüzlerin aksine akılda kalıcı, sade ama etkileşimli metotları tercih ediyorum.</motion.p>
+              <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Oyunlaştırılmış</motion.h1>
+              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold text-theme2-shape tracking-tight mb-8 leading-none">özel ürünler</motion.h2>
+              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">İngilizce, müzik, bilişim teknolojileri, matematik ve yaratıcı kodlama alanlarında prototipler tasarlıyorum. Sıradan arayüzlerin aksine akılda kalıcı, sade ama etkileşimli metotları tercih ediyorum.</motion.p>
             </motion.div>
           </div>
         </section>
 
-        {/* SECTION 3 - MOR TEMA (Gerçekçi Müzik & Viyolin & Flüt) */}
+        {/* SECTION 3 - MOR TEMA (Gerçekçi Müzik & Viyolin & Trompet) */}
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme3-bg overflow-hidden text-theme3-title selection:bg-theme3-shape/40">
           
-          {/* Tüm isBlurred bileşenleri 3. bölümden tamamen temizlendi */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-            {/* Dev ekranlar için (xl, 2xl) scale değerleri artırıldı */}
+            {/* Genişlik (width) sınıfları Section 1 oranlarına sabitlendi */}
             <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="orbit" className="top-[10%] left-[5%] sm:top-[10%] sm:left-[5%] md:top-[15%] md:left-[10%]" delay={0.5} duration={10}>
-               <VectorPiano className="scale-[0.55] sm:scale-100 xl:scale-[1.5] 2xl:scale-[2]" rotation="-15deg" />
+               <VectorPiano className="w-[100px] sm:w-[120px] md:w-[140px] lg:w-[160px] xl:w-[180px] 2xl:w-[220px] h-auto" rotation="-15deg" />
             </FloatingElement>
             <FloatingElement hoverProps={{ scale: 1.25, rotate: 5 }} isMobile={isMobile} animationType="float" className="bottom-[15%] left-[5%] sm:bottom-[20%] sm:left-[8%] md:bottom-[20%] md:left-[15%] blur-[2px]" delay={1.5} duration={6}>
-               <VectorNotes className="scale-[0.55] sm:scale-100 xl:scale-[1.5] 2xl:scale-[2]" rotation="10deg" />
+               <VectorNotes className="w-[70px] sm:w-[80px] md:w-[90px] lg:w-[110px] xl:w-[130px] 2xl:w-[160px] h-auto" rotation="10deg" />
             </FloatingElement>
             <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="drift" className="top-[20%] right-[5%] sm:top-[20%] sm:right-[5%] md:top-[15%] md:right-[10%]" delay={0.8} duration={12}>
-               <VectorDrum className="scale-[0.55] sm:scale-100 xl:scale-[1.5] 2xl:scale-[2]" rotation="20deg" />
+               <VectorDrum className="w-[80px] sm:w-[100px] md:w-[110px] lg:w-[130px] xl:w-[150px] 2xl:w-[180px] h-auto" rotation="20deg" />
             </FloatingElement>
             <FloatingElement hoverProps={{ scale: 1.25, rotate: 5 }} isMobile={isMobile} animationType="float" className="bottom-[15%] right-[10%] sm:bottom-[15%] sm:right-[10%] md:bottom-[15%] md:right-[15%]" delay={2} duration={7}>
-               <VectorGuitar className="scale-[0.55] sm:scale-100 xl:scale-[1.5] 2xl:scale-[2]" rotation="-25deg" />
+               <VectorGuitar className="w-[90px] sm:w-[110px] md:w-[120px] lg:w-[140px] xl:w-[160px] 2xl:w-[190px] h-auto" rotation="-25deg" />
             </FloatingElement>
             <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="orbit" className="top-[45%] right-[15%] sm:top-[50%] sm:right-[25%]" delay={2.5} duration={11}>
-               <VectorViolin className="scale-[0.55] sm:scale-100 xl:scale-[1.5] 2xl:scale-[2]" rotation="15deg" />
+               <VectorViolin className="w-[80px] sm:w-[100px] md:w-[120px] lg:w-[140px] xl:w-[160px] 2xl:w-[190px] h-auto" rotation="15deg" />
             </FloatingElement>
-            {/* Yeni eklenen Flüt vektörü */}
             <FloatingElement hoverProps={{ scale: 1.25, rotate: 10 }} isMobile={isMobile} animationType="drift" className="top-[60%] left-[25%] sm:top-[65%] sm:left-[35%] md:top-[70%] md:left-[35%]" delay={1.2} duration={9}>
-               <VectorFlute className="scale-[0.55] sm:scale-100 xl:scale-[1.5] 2xl:scale-[2]" rotation="-15deg" />
+               <VectorTrumpet className="w-[110px] sm:w-[140px] md:w-[160px] lg:w-[180px] xl:w-[220px] 2xl:w-[260px] h-auto" rotation="-15deg" />
             </FloatingElement>
           </div>
 
           <div className="container mx-auto px-6 relative z-40 text-center flex flex-col items-center w-full pointer-events-none">
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 2 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
-              <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] font-black tracking-tight mb-2 drop-shadow-md leading-none break-words text-theme3-title">Mikro Seviyede</motion.h1>
-              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] font-bold text-theme3-shape tracking-tight mb-8 leading-none drop-shadow-sm">öğrenme</motion.h2>
-              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-wide text-white">Geliştirdiğim ürünler genelde mikro seviyede kavramların öğrenilmesi üzerine kurulu yaratıcı örneklerdir. Kullanıcının kafasının karışmaması adına ürünlerimi minimal ölçütte tutmayı tercih ediyorum.</motion.p>
+              <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-md leading-none break-words text-theme3-title">Mikro Seviyede</motion.h1>
+              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold text-theme3-shape tracking-tight mb-8 leading-none drop-shadow-sm">öğrenme</motion.h2>
+              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Geliştirdiğim ürünler genelde mikro seviyede kavramların öğrenilmesi üzerine kurulu yaratıcı örneklerdir. Kullanıcının kafasının karışmaması adına ürünlerimi minimal ölçütte tutmayı tercih ediyorum.</motion.p>
             </motion.div>
           </div>
 
