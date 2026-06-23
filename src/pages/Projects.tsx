@@ -5,7 +5,7 @@ import { useIsMobile } from "../hooks/use-mobile";
 // Kategoriler
 const CATEGORIES = ["TÜMÜ", "OYUN", "EDTECH", "3D / WEBGL", "WEB"];
 
-// Projelerin Datası (Kendi projelerine göre uyarlandı)
+// Projelerin Datası
 const PROJECTS_DATA = [
   {
     id: 1,
@@ -76,7 +76,7 @@ const Projects = () => {
   }, [filteredProjects, activeCategory]);
 
  return (
-    <div className="h-[100dvh] w-full overflow-hidden bg-[#111111] text-white flex flex-col justify-center relative font-questrial">
+    <div className="h-[100dvh] w-full overflow-hidden bg-[#111111] text-white flex flex-col justify-center relative font-satoshi">
       
       {/* Sürüklenebilir Proje Kartları Alanı */}
       <div className="w-full">
@@ -101,19 +101,24 @@ const Projects = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  // Kart genişlikleri eski haline sabitlendi (450px)
                   className="flex flex-col group w-[280px] md:w-[450px]"
                 >
+                  {/* Kart yüksekliği eski haline sabitlendi (280px) */}
                   <div className={`w-full h-[180px] md:h-[280px] ${project.bg} rounded-sm overflow-hidden relative mb-4`}>
                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
                   </div>
                   
-                  {/* Başlık ve Alt Başlık Fontları Güncellendi */}
-                  <motion.h3 layout className="text-xl md:text-3xl font-questrial font-bold uppercase tracking-widest">
+                  {/* Başlık Fontları eski boyutlarına (text-xl md:text-3xl) geri getirildi */}
+                  <motion.h3 layout className="text-xl md:text-3xl font-black uppercase tracking-tight">
                     {project.title}
                   </motion.h3>
-                  <motion.p layout className="text-sm md:text-base font-questrial text-white/70 mt-2 tracking-wide">
+                  
+                  {/* Alt Başlık Fontları eski boyutlarına (text-sm md:text-base) geri getirildi */}
+                  <motion.p layout className="text-sm md:text-base font-medium text-white/70 mt-2 tracking-wide">
                     {project.subtitle}
                   </motion.p>
+                  
                   <motion.div layout className="w-8 h-[1px] bg-white mt-4 opacity-50" />
                 </motion.div>
               ))}
@@ -131,8 +136,8 @@ const Projects = () => {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  // Kategori fontu Index ile aynı stile (font-questrial) getirildi
-                  className={`font-questrial text-[11px] font-bold tracking-[0.15em] uppercase flex items-start gap-1 transition-colors duration-300 ${
+                  // Buton font boyutları eski haline sabitlendi
+                  className={`text-[11px] font-bold tracking-[0.15em] uppercase flex items-start gap-1 transition-colors duration-300 ${
                     activeCategory === category ? "text-white" : "text-white/40 hover:text-white/80"
                   }`}
                 >
@@ -141,13 +146,14 @@ const Projects = () => {
                 </button>
               ))}
             </div>
+            {/* Çizgi genişliği eski haline (400px) sabitlendi */}
             <div className="w-[400px] h-[1px] bg-white/20 relative"></div>
           </div>
         </div>
       )}
 
       {/* Dinamik Tarih Alanı */}
-      <div className="absolute bottom-8 left-8 text-xs font-questrial font-bold tracking-widest opacity-80 z-0">
+      <div className="absolute bottom-8 left-8 text-xs font-bold tracking-widest opacity-80 z-0">
         2012/{new Date().getFullYear()}
       </div>
     </div>
