@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useIsMobile } from "../hooks/use-mobile";
+import { Footer } from "../components/Footer";
 
 // --- YENİ NESİL ETKİLEŞİMLİ VEKTÖR (Ekran Boyutuna Göre Optimize Edilmiş Hareketler) ---
 const FloatingElement = ({ children, delay = 0, duration = 4, className, hoverProps = { scale: 1.25, rotateX: 10, rotateY: 10 }, disableTap = false, isBlurred = false, animationType = "float", isMobile = false }: any) => {
@@ -372,8 +373,15 @@ const Index = () => {
         animate={{ y: `-${currentSection * 100}dvh` }}
         transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }} 
       >
-        
-        {/* SECTION 1 - YEŞİL/MOR TEMA (Satranç & Developer) */}
+        <Section1 currentSection={currentSection} isMobile={isMobile} containerVariant={containerVariant} itemVariant={itemVariant} />
+        <Section2 currentSection={currentSection} isMobile={isMobile} containerVariant={containerVariant} itemVariant={itemVariant} />
+        <Section3 currentSection={currentSection} isMobile={isMobile} containerVariant={containerVariant} itemVariant={itemVariant} />
+      </motion.div>
+    </div>
+  );
+};
+
+const Section1 = ({ currentSection, isMobile, containerVariant, itemVariant }: any) => (
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme1-bg overflow-hidden text-theme1-text selection:bg-white/30">
           
           <NetworkBackground />
@@ -407,13 +415,14 @@ const Index = () => {
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 0 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Merhaba, ben Mert.</motion.h1>
               <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold tracking-tight mb-8 leading-none">Eğitim Teknolojileri Geliştiricisi</motion.h2>
-              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Eğitim teknolojileri üzerine alışılagelmişin dışında uygulamalar geliştiriyorum. Amacım, öğrenme süreçlerini sıkıcı ezber kalıplarından kurtararak teknolojinin sunduğu imkanlarla interaktif bir hale getirmek.</motion.p>
+              <motion.p variants={itemVariant} className="text-sm sm:text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Eğitim teknolojileri üzerine alışılagelmişin dışında uygulamalar geliştiriyorum. Amacım, öğrenme süreçlerini sıkıcı ezber kalıplarından kurtararak teknolojinin sunduğu imkanlarla interaktif bir hale getirmek.</motion.p>
             </motion.div>
           </div>
 
         </section>
+);
 
-        {/* SECTION 2 - MERCAN TEMA (Fiziksel Savrulma Etkileşimli Uçan Balonlar) */}
+const Section2 = ({ currentSection, isMobile, containerVariant, itemVariant }: any) => (
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme2-bg overflow-hidden text-white selection:bg-white/30">
           
           <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
@@ -447,12 +456,13 @@ const Index = () => {
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 1 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Oyunlaştırılmış</motion.h1>
               <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold text-theme2-shape tracking-tight mb-8 leading-none">özel ürünler</motion.h2>
-              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">İngilizce, müzik, bilişim teknolojileri, matematik ve yaratıcı kodlama alanlarında prototipler tasarlıyorum. Sıradan arayüzlerin aksine akılda kalıcı, sade ama etkileşimli metotları tercih ediyorum.</motion.p>
+              <motion.p variants={itemVariant} className="text-sm sm:text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">İngilizce, müzik, bilişim teknolojileri, matematik ve yaratıcı kodlama alanlarında prototipler tasarlıyorum. Sıradan arayüzlerin aksine akılda kalıcı, sade ama etkileşimli metotları tercih ediyorum.</motion.p>
             </motion.div>
           </div>
         </section>
+);
 
-        {/* SECTION 3 - MOR TEMA (Gerçekçi Müzik & Viyolin & Trompet) */}
+const Section3 = ({ currentSection, isMobile, containerVariant, itemVariant }: any) => (
         <section className="relative h-[100dvh] w-full flex items-center justify-center bg-theme3-bg overflow-hidden text-theme3-title selection:bg-theme3-shape/40">
           
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
@@ -472,7 +482,7 @@ const Index = () => {
             <FloatingElement hoverProps={{ scale: 1.25, rotate: -5 }} isMobile={isMobile} animationType="orbit" className="top-[45%] right-[15%] sm:top-[50%] sm:right-[25%]" delay={2.5} duration={11}>
                <VectorViolin className="w-[80px] sm:w-[100px] md:w-[120px] lg:w-[140px] xl:w-[160px] 2xl:w-[190px] h-auto" rotation="15deg" />
             </FloatingElement>
-            <FloatingElement hoverProps={{ scale: 1.25, rotate: 10 }} isMobile={isMobile} animationType="drift" className="top-[60%] left-[25%] sm:top-[65%] sm:left-[35%] md:top-[70%] md:left-[35%]" delay={1.2} duration={9}>
+            <FloatingElement hoverProps={{ scale: 1.25, rotate: 10 }} isMobile={isMobile} animationType="drift" className="top-[60%] left-[10%] sm:top-[65%] sm:left-[15%] md:top-[75%] md:left-[15%] opacity-50" delay={1.2} duration={9}>
                <VectorTrumpet className="w-[110px] sm:w-[140px] md:w-[160px] lg:w-[180px] xl:w-[220px] 2xl:w-[260px] h-auto" rotation="-15deg" />
             </FloatingElement>
           </div>
@@ -481,15 +491,11 @@ const Index = () => {
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 2 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-md leading-none break-words text-theme3-title">Mikro Seviyede</motion.h1>
               <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold text-theme3-shape tracking-tight mb-8 leading-none drop-shadow-sm">öğrenme</motion.h2>
-              <motion.p variants={itemVariant} className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Geliştirdiğim ürünler genelde mikro seviyede kavramların öğrenilmesi üzerine kurulu yaratıcı örneklerdir. Kullanıcının kafasının karışmaması adına ürünlerimi minimal ölçütte tutmayı tercih ediyorum.</motion.p>
+              <motion.p variants={itemVariant} className="text-sm sm:text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Geliştirdiğim ürünler genelde mikro seviyede kavramların öğrenilmesi üzerine kurulu yaratıcı örneklerdir. Kullanıcının kafasının karışmaması adına ürünlerimi minimal ölçütte tutmayı tercih ediyorum.</motion.p>
             </motion.div>
           </div>
-
+          <Footer />
         </section>
-
-      </motion.div>
-    </div>
-  );
-};
+);
 
 export default Index;

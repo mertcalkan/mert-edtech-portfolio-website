@@ -9,6 +9,10 @@ const Navigation = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  if (location.pathname.includes("/uslu-sayilar")) {
+    return null;
+  }
+
   const navItems = [
     { path: "/", label: "Hakkımda" },
     { path: "/projeler", label: "Projeler" },
@@ -21,9 +25,11 @@ const Navigation = () => {
         <Link
           to="/"
           onClick={() => setIsMenuOpen(false)}
-          className="font-satoshi font-bold text-2xl text-white tracking-widest"
+          className="group flex items-center justify-center outline-none"
         >
-          MERT.
+          <div className="relative font-satoshi text-3xl sm:text-4xl font-black tracking-tighter text-white/90 transition-all duration-500 ease-out group-hover:scale-110 group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+            M
+          </div>
         </Link>
 
         {/* Desktop Navigation */}

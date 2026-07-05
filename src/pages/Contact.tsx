@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Footer } from "../components/Footer";
 
 // --- GERÇEKÇİ 2D KİMYA/BİLİM VEKTÖR BİLEŞENLERİ ---
 const VectorFlask = ({
@@ -284,7 +285,7 @@ const FloatingElement = ({
 }: any) => {
   return (
     <motion.div
-      className={`absolute select-none pointer-events-auto ${className}`}
+      className={`absolute select-none pointer-events-auto opacity-30 md:opacity-100 ${className}`}
       animate={{
         y: ["-15px", "15px", "-15px"],
         rotate: [-2, 2, -2],
@@ -327,7 +328,7 @@ const Contact = () => {
         {/* 2D Vektörel Kimya Elementleri Arka Planı (Ölçüler Index.tsx'e tamamen eşitlendi) */}
         <div className="absolute inset-0 z-0 overflow-hidden flex items-center justify-center">
           <FloatingElement
-            className="top-[10%] left-[5%] md:top-[15%] md:left-[10%] xl:top-[12%] xl:left-[8%]"
+            className="top-[5%] -left-[10%] sm:top-[10%] sm:left-[2%] md:top-[15%] md:left-[5%] xl:top-[12%] xl:left-[8%]"
             delay={0}
             duration={5}
             hoverScale={1.2}
@@ -339,7 +340,7 @@ const Contact = () => {
           </FloatingElement>
 
           <FloatingElement
-            className="bottom-[15%] right-[5%] md:bottom-[20%] md:right-[10%] xl:bottom-[15%] xl:right-[12%]"
+            className="bottom-[5%] -right-[10%] sm:bottom-[15%] sm:right-[2%] md:bottom-[20%] md:right-[5%] xl:bottom-[15%] xl:right-[10%]"
             delay={1.5}
             duration={6}
             hoverScale={1.2}
@@ -351,7 +352,7 @@ const Contact = () => {
           </FloatingElement>
 
           <FloatingElement
-            className="bottom-[10%] left-[10%] md:bottom-[15%] md:left-[15%] xl:bottom-[12%] xl:left-[10%]"
+            className="bottom-[5%] -left-[10%] sm:bottom-[10%] sm:left-[2%] md:bottom-[15%] md:left-[5%] xl:bottom-[12%] xl:left-[8%]"
             delay={0.5}
             duration={4}
             hoverScale={1.2}
@@ -363,7 +364,7 @@ const Contact = () => {
           </FloatingElement>
 
           <FloatingElement
-            className="top-[15%] right-[10%] md:top-[20%] md:right-[15%] xl:top-[15%] xl:right-[12%]"
+            className="top-[5%] -right-[10%] sm:top-[15%] sm:right-[2%] md:top-[20%] md:right-[5%] xl:top-[15%] xl:right-[8%]"
             delay={2}
             duration={5.5}
             hoverScale={1.2}
@@ -465,6 +466,7 @@ const Contact = () => {
             </motion.div>
           </motion.div>
         </div>
+        <Footer />
       </section>
     </div>
   );

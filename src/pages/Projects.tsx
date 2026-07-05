@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "../hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
+import usluSayilarImg from "../assets/uslu-sayilar-2.png";
+import { Footer } from "../components/Footer";
 
 // Kategoriler
-const CATEGORIES = ["TÜMÜ", "OYUN", "EDTECH", "3D / WEBGL", "WEB"];
+const CATEGORIES = ["TÜMÜ", "EDTECH", "WEB AR", "ART"];
 
 // Projelerin Datası
 const PROJECTS_DATA = [
@@ -11,44 +14,12 @@ const PROJECTS_DATA = [
     id: 1,
     title: "ÜSLÜ SAYILAR AVCISI",
     subtitle: "3d interaktif matematik oyunu",
-    category: "OYUN",
+    category: "EDTECH",
     bg: "bg-gradient-to-br from-blue-600 to-purple-800",
-  },
-  {
-    id: 2,
-    title: "ARTORITHM",
-    subtitle: "çocuklar için yaratıcı kodlama",
-    category: "EDTECH",
-    bg: "bg-gradient-to-br from-pink-500 to-orange-400",
-  },
-  {
-    id: 3,
-    title: "AIR PIANO",
-    subtitle: "mediapipe destekli sanal piyano",
-    category: "3D / WEBGL",
-    bg: "bg-gradient-to-br from-teal-400 to-emerald-600",
-  },
-  {
-    id: 4,
-    title: "DUKAPO",
-    subtitle: "performans odaklı e-ticaret",
-    category: "WEB",
-    bg: "bg-gradient-to-br from-gray-700 to-gray-900",
-  },
-  {
-    id: 5,
-    title: "ROBLOX EDU",
-    subtitle: "luau ile mikro öğrenme",
-    category: "OYUN",
-    bg: "bg-gradient-to-br from-red-500 to-rose-700",
-  },
-  {
-    id: 6,
-    title: "MEGA-APP",
-    subtitle: "pedagojik modüler platform",
-    category: "EDTECH",
-    bg: "bg-gradient-to-br from-indigo-600 to-cyan-500",
+    image: usluSayilarImg,
+    slug: "uslu-sayilar"
   }
+
 ];
 
 const Projects = () => {
@@ -56,6 +27,7 @@ const Projects = () => {
   const [dragWidth, setDragWidth] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Filtrelenmiş projeler
   const filteredProjects = PROJECTS_DATA.filter(
@@ -75,22 +47,26 @@ const Projects = () => {
     }
   }, [filteredProjects, activeCategory]);
 
- return (
-    <div className="h-[100dvh] w-full overflow-hidden bg-[#111111] text-white flex flex-col justify-center relative font-satoshi">
+  return (
+    <div className="h-[100dvh] w-full overflow-hidden bg-[#111111] text-white flex flex-col relative font-satoshi">
       
       {/* Sürüklenebilir Proje Kartları Alanı */}
-      <div className="w-full">
+      <div className="w-full h-full flex flex-col lg:justify-center overflow-y-auto lg:overflow-hidden hide-scrollbar">
+        
+        {/* Mobilde yukarıdan boşluk bırakmak için */}
+        <div className="h-28 lg:hidden flex-shrink-0" />
+
         <motion.div 
           ref={carouselRef} 
-          className="cursor-grab overflow-hidden px-6 md:px-20"
+          className="lg:cursor-grab flex-shrink-0 px-6 md:px-20"
           whileTap={{ cursor: "grabbing" }}
         >
           <motion.div
-            drag="x"
+            drag={typeof window !== "undefined" && window.innerWidth >= 1024 ? "x" : false}
             dragConstraints={{ right: 0, left: -Math.max(dragWidth, 0) }} 
             dragElastic={0.15} 
             dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
-            className="flex items-start gap-6 md:gap-10 w-max"
+            className="flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:w-max w-full"
           >
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
@@ -101,11 +77,13 @@ const Projects = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  // Kart genişlikleri eski haline sabitlendi (450px)
-                  className="flex flex-col group w-[280px] md:w-[450px]"
+                  onClick={() => project.slug && navigate(`/projeler/${project.slug}`)}
+                  className={`flex flex-col group w-[280px] md:w-[600px] lg:w-[450px] ${project.slug ? "cursor-pointer" : ""}`}
                 >
-                  {/* Kart yüksekliği eski haline sabitlendi (280px) */}
-                  <div className={`w-full h-[180px] md:h-[280px] ${project.bg} rounded-sm overflow-hidden relative mb-4`}>
+                  <div className={`w-full h-[180px] md:h-[380px] lg:h-[280px] ${project.bg} rounded-sm overflow-hidden relative mb-4`}>
+                    {project.image && (
+                      <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover" />
+                    )}
                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
                   </div>
                   
@@ -125,11 +103,16 @@ const Projects = () => {
             </AnimatePresence>
           </motion.div>
         </motion.div>
+        
+        {/* Mobil/Tablet Footer (Scroll akışının en altında) */}
+        <div className="w-full mt-auto mb-6 pt-12 flex justify-center lg:hidden flex-shrink-0">
+          <Footer className="pointer-events-none flex justify-center" />
+        </div>
       </div>
 
       {/* Alt Filtre Barı */}
       {!isMobile && (
-        <div className="absolute bottom-12 left-0 w-full flex justify-center">
+        <div className="absolute bottom-12 left-0 w-full flex justify-center z-10 pointer-events-auto">
           <div className="flex flex-col items-center">
             <div className="flex space-x-8 mb-3">
               {CATEGORIES.map((category) => (
@@ -151,11 +134,8 @@ const Projects = () => {
           </div>
         </div>
       )}
-
-      {/* Dinamik Tarih Alanı */}
-      <div className="absolute bottom-8 left-8 text-xs font-bold tracking-widest opacity-80 z-0">
-        2012/{new Date().getFullYear()}
-      </div>
+      
+      <Footer className="absolute bottom-4 left-0 w-full z-40 pointer-events-none lg:flex justify-center hidden" />
     </div>
   );
 };
