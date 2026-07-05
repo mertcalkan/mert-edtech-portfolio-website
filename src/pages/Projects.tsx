@@ -82,7 +82,14 @@ const Projects = () => {
                 >
                   <div className={`w-full h-[180px] md:h-[380px] lg:h-[280px] ${project.bg} rounded-sm overflow-hidden relative mb-4`}>
                     {project.image && (
-                      <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover" />
+                      <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        className="absolute inset-0 w-full h-full object-cover" 
+                        loading={project.id === 1 ? "eager" : "lazy"}
+                        decoding="async"
+                        fetchPriority={project.id === 1 ? "high" : "auto"}
+                      />
                     )}
                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
                   </div>
