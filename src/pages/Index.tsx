@@ -333,14 +333,31 @@ const Index = () => {
       }
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isScrolling.current) return;
+      if (e.key === "PageDown" || e.key === "ArrowDown") {
+        e.preventDefault();
+        isScrolling.current = true;
+        setCurrentSection((prev) => Math.min(prev + 1, 2));
+        scrollTimeout = setTimeout(() => { isScrolling.current = false; }, 750);
+      } else if (e.key === "PageUp" || e.key === "ArrowUp") {
+        e.preventDefault();
+        isScrolling.current = true;
+        setCurrentSection((prev) => Math.max(prev - 1, 0));
+        scrollTimeout = setTimeout(() => { isScrolling.current = false; }, 750);
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("keydown", handleKeyDown, { passive: false });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
       clearTimeout(scrollTimeout);
     };
   }, []);
@@ -414,7 +431,7 @@ const Section1 = ({ currentSection, isMobile, containerVariant, itemVariant }: a
           <div className="container mx-auto px-6 relative z-40 text-center flex flex-col items-center w-full pointer-events-none">
             <motion.div variants={containerVariant} initial="hidden" animate={currentSection === 0 ? "visible" : "hidden"} className="w-full pointer-events-auto mt-16 sm:mt-0">
               <motion.h1 variants={itemVariant} className="text-[12vw] sm:text-6xl md:text-7xl lg:text-[100px] xl:text-[110px] 2xl:text-[120px] font-black tracking-tight mb-2 drop-shadow-lg leading-none break-words">Merhaba, ben Mert.</motion.h1>
-              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold tracking-tight mb-8 leading-none">Eğitim Teknolojileri Geliştiricisi</motion.h2>
+              <motion.h2 variants={itemVariant} className="text-[6vw] sm:text-4xl md:text-5xl lg:text-[50px] xl:text-[55px] 2xl:text-[60px] font-bold text-white/60 tracking-tight mb-8 leading-none">Eğitim Teknolojileri Geliştiricisi</motion.h2>
               <motion.p variants={itemVariant} className="text-sm sm:text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white">Eğitim teknolojileri üzerine alışılagelmişin dışında uygulamalar geliştiriyorum. Amacım, öğrenme süreçlerini sıkıcı ezber kalıplarından kurtararak teknolojinin sunduğu imkanlarla interaktif bir hale getirmek.</motion.p>
             </motion.div>
           </div>
