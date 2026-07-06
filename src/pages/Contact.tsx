@@ -392,7 +392,7 @@ const Contact = () => {
 
             <motion.p
               variants={itemVariant}
-              className="text-xs sm:text-base md:text-lg xl:text-xl 2xl:text-2xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white/95 mb-8"
+              className="text-sm sm:text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-medium max-w-2xl xl:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed tracking-wide text-white/95 mb-8"
             >
               Benimle aşağıdaki yöntemler ile iletişime geçebilirsin.
             </motion.p>
@@ -413,9 +413,11 @@ const Contact = () => {
             >
               {/* LinkedIn */}
               <a
-                href="#"
+                href="https://linkedin.com/in/mertcalkan"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm hover:bg-[#eaff00] hover:text-[#0f766e] transition-all duration-300 drop-shadow-lg hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(234,255,0,0.5)]"
+                className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm hover:bg-white/20 hover:text-white transition-all duration-500 drop-shadow-lg hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -429,9 +431,11 @@ const Contact = () => {
 
               {/* Instagram */}
               <a
-                href="#"
+                href="https://instagram.com/mertcalkan.edtech"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm hover:bg-[#eaff00] hover:text-[#0f766e] transition-all duration-300 drop-shadow-lg hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(234,255,0,0.5)]"
+                className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm hover:bg-white/20 hover:text-white transition-all duration-500 drop-shadow-lg hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -450,9 +454,11 @@ const Contact = () => {
 
               {/* YouTube */}
               <a
-                href="#"
+                href="https://youtube.com/@MertCalkan"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm hover:bg-[#eaff00] hover:text-[#0f766e] transition-all duration-300 drop-shadow-lg hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(234,255,0,0.5)]"
+                className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm hover:bg-white/20 hover:text-white transition-all duration-500 drop-shadow-lg hover:scale-110 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
               >
                 <svg
                   viewBox="0 0 24 24"
