@@ -48,12 +48,7 @@ const Projects = () => {
   }, [filteredProjects, activeCategory]);
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="h-[100dvh] w-full overflow-hidden bg-[#111111] text-white flex flex-col relative font-satoshi"
-    >
+    <div className="h-[100dvh] w-full overflow-hidden bg-[#111111] text-white flex flex-col relative font-satoshi">
       
       {/* Sürüklenebilir Proje Kartları Alanı */}
       <div className="w-full h-full flex flex-col lg:justify-center overflow-y-auto lg:overflow-hidden hide-scrollbar">
@@ -148,7 +143,7 @@ const Projects = () => {
       )}
       
       <Footer className="absolute bottom-4 left-0 w-full z-40 pointer-events-none lg:flex justify-center hidden" />
-    </motion.div>
+    </div>
   );
 };
 

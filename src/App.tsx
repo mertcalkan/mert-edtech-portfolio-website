@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { Loader } from "@react-three/drei"
 import Navigation from "./components/Navigation"
@@ -15,13 +15,14 @@ import ProjectIframe from "./pages/ProjectIframe"
 
 const queryClient = new QueryClient()
 
-// Sadece Fade-In (Belirme) efekti. Eski sayfa anında silinir (kasmayı önler), yeni sayfa yumuşakça gelir.
+// Optimize edilmiş, performanslı ve akıcı yatay kayma efekti (AnimatePresence olmadan)
 const PageWrapper = ({ children }: { children: React.ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.5, ease: "easeOut" }}
+    initial={{ opacity: 0, x: "-15vw" }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.4, ease: "easeOut" }}
     className="absolute inset-0 w-full h-full"
+    style={{ willChange: "transform, opacity" }}
   >
     {children}
   </motion.div>
@@ -32,7 +33,6 @@ const AnimatedRoutes = () => {
 
   return (
     <div className="relative w-full h-[100dvh] overflow-hidden bg-black">
-      {/* AnimatePresence KALDIRILDI. Çift Canvas render edilmesinin ve kasmanın önüne geçildi. */}
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageWrapper><Index /></PageWrapper>} />
         <Route path="/hakkimda" element={<PageWrapper><Index /></PageWrapper>} />
@@ -48,9 +48,12 @@ const AnimatedRoutes = () => {
 const KeyboardNavigator = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isNavigating = useRef(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isNavigating.current) return;
+
       const routes = ["/", "/projeler", "/iletisim"];
       let currentIndex = routes.indexOf(location.pathname);
       
@@ -61,10 +64,14 @@ const KeyboardNavigator = () => {
 
       if (e.key === "ArrowRight") {
         const nextIndex = (currentIndex + 1) % routes.length;
+        isNavigating.current = true;
         navigate(routes[nextIndex]);
+        setTimeout(() => { isNavigating.current = false; }, 800);
       } else if (e.key === "ArrowLeft") {
         const prevIndex = (currentIndex - 1 + routes.length) % routes.length;
+        isNavigating.current = true;
         navigate(routes[prevIndex]);
+        setTimeout(() => { isNavigating.current = false; }, 800);
       }
     };
 
